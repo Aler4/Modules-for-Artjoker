@@ -527,22 +527,31 @@ const getSumMatrix = (matrix1, matrix2) => {
 };
 //  16)Удалить из матрицы тот столбец который имеет хотя бы один нулевой элемент.
 const removeColumnWithZero = (matrix) => {
-
     let clone = matrix.map(arr => arr.slice());
-    let result = [];
-
+    let res = [];
     for (let i in clone) {
         if (clone[i].some((item) => item == 0)) {
             let pos = clone[+i].indexOf(0);
             for (let j in clone) {
                 clone[j].splice(pos, 1);
-                result[j] != clone[j] ? result.push(clone[j]) : null;
+                res[j] != clone[j] ? res.push(clone[j]) : null;
             }
         }
     }
-    return result[0].length !== matrix[0].length ? result : matrix;
+    return res[0].length !== matrix[0].length ? res : matrix;
 };
 
-// 16) Удалить из матрицы тот столбец который имеет хотя бы один нулевой элемент.
-const removeRowWithZero = (matrix) => {
+// 16 Удалить из матрицы  строку которая имеет хотя бы один нулевой элемент;
+const removeRowZero = (matrix) => {
+    let result = [];
+    for (let row of matrix) {
+        console.log(row);
+        // @ts-ignore
+        if (row.includes(0) === false) {
+            result.push(row);
+        }
+        ;
+    }
+    ;
+    return result;
 };
