@@ -540,7 +540,6 @@ const removeColumnWithZero = (matrix) => {
     }
     return res[0].length !== matrix[0].length ? res : matrix;
 };
-
 // 16 Удалить из матрицы  строку которая имеет хотя бы один нулевой элемент;
 const removeRowZero = (matrix) => {
     let result = [];
@@ -554,4 +553,126 @@ const removeRowZero = (matrix) => {
     }
     ;
     return result;
+};
+//  17 Посчитать сумму/количество нулевых элементов/среднее значение
+// элементов матрицы над и под главной диагональю и на главной диагональю.
+// Посчитать сумму  над и под главной диагональю и на главной диагональю
+const getSumFromMatrix = (matrix) => {
+    let result = {
+        'sum-above-diagonal': 0,
+        'sum-under-diagonal': 0,
+        'sum-diagonal': 0,
+    };
+    let copyMatrixAbove = matrix.map(item => item.slice());
+    let copyMatrixUnder = matrix.map(item => item.slice()).reverse();
+    let numbersAbove = [];
+    let numbersUnder = [];
+    for (let i = 0; i <= matrix.length - 1; i++) {
+        result["sum-diagonal"] += matrix[i][i];
+        let valueAbove = copyMatrixAbove[i].slice(i + 1);
+        numbersAbove.push(...valueAbove);
+        let valueUnder = copyMatrixUnder[i].reverse().slice(i + 1);
+        numbersUnder.push(...valueUnder);
+    }
+    ;
+    for (let k = 0; k <= numbersAbove.length - 1; k++) {
+        result["sum-above-diagonal"] += +numbersAbove[k];
+        result["sum-under-diagonal"] += +numbersUnder[k];
+    }
+    ;
+    return result;
+};
+// Посчитать количество нулевых элементов
+// // элементов матрицы над и под главной диагональю и на главной диагональю.
+const getAmountZeroMatrix = (matrix) => {
+    const result = {
+        'zeros-above-diagonal': 0,
+        'zeros-under-diagonal': 0,
+        'zeros-diagonal': 0,
+    };
+    let copyMatrixAbove = matrix.map(item => item.slice());
+    let copyMatrixUnder = matrix.map(item => item.slice()).reverse();
+    let numbersAbove = [];
+    let numbersUnder = [];
+    for (let i = 0; i <= matrix.length - 1; i++) {
+        if (matrix[i][i] === 0)
+            result['zeros-diagonal'] += 1;
+        let valueAbove = copyMatrixAbove[i].slice(i + 1);
+        numbersAbove.push(...valueAbove);
+        let valueUnder = copyMatrixUnder[i].reverse().slice(i + 1);
+        numbersUnder.push(...valueUnder);
+    }
+    ;
+    for (let k = 0; k <= numbersAbove.length - 1; k++) {
+        if (+numbersAbove[k] === 0) {
+            result["zeros-above-diagonal"] += 1;
+        }
+        ;
+        if (+numbersUnder[k] === 0) {
+            result["zeros-under-diagonal"] += 1;
+        }
+        ;
+    }
+    ;
+    return result;
+};
+// Посчитать среднее значение элементов матрицы над и под главной диагональю и на главной диагональю.
+const getMeanMatrix = (matrix) => {
+    let result = {
+        'mean-above-diagonal': 0,
+        'mean-under-diagonal': 0,
+        'mean-diagonal': 0,
+    };
+    let copyMatrixAbove = matrix.map(item => item.slice());
+    let copyMatrixUnder = matrix.map(item => item.slice()).reverse();
+    let numbersAbove = [];
+    let numbersUnder = [];
+    for (let i = 0; i <= matrix.length - 1; i++) {
+        result["mean-diagonal"] += matrix[i][i];
+        let valueAbove = copyMatrixAbove[i].slice(i + 1);
+        numbersAbove.push(...valueAbove);
+        let valueUnder = copyMatrixUnder[i].reverse().slice(i + 1);
+        numbersUnder.push(...valueUnder);
+    }
+    ;
+    for (let k = 0; k <= numbersAbove.length - 1; k++) {
+        result["mean-above-diagonal"] += +numbersAbove[k];
+        result["mean-under-diagonal"] += +numbersUnder[k];
+    }
+    ;
+    result["mean-diagonal"] = +((result["mean-above-diagonal"] / matrix.length).toFixed(2));
+    result["mean-above-diagonal"] = +((result["mean-above-diagonal"] / numbersAbove.length).toFixed(2));
+    result["mean-under-diagonal"] = +((result["mean-under-diagonal"] / numbersUnder.length).toFixed(2));
+    return result;
+};
+;
+let iterObj = {
+    // @ts-ignore
+    *[Symbol.iterator]() {
+        let num1 = 1;
+        let num2 = 1;
+        let flag = true;
+        while (flag) {
+            let current = num2;
+            num2 = num1;
+            num1 = num1 + current;
+            yield current;
+            if (current == Infinity) {
+                flag = false;
+            }
+        }
+    }
+};
+let iterator = iterObj[Symbol.iterator]();
+// ****Рекурсивная функция для вычисления чисел фибоначи
+const getFibonacci = (value) => {
+    if (value <= 1) {
+        return 1;
+    }
+    return getFibonacci(value - 1) + getFibonacci(value - 2);
+};
+// ***Мемоизированная функцию для вычисления чисел фибоначчи
+const memooize = (fn) => {
+    const cache = {};
+    return (n) => cache[n] || (cache[n] = fn(n));
 };
