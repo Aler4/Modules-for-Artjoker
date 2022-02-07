@@ -1,16 +1,104 @@
 'use strict';
 // 1) Написать функцию которая проверяет являются две строки анаграммой или нет
+
+ // Создаю свой метод для  разбития строки на массив
+
+String.prototype.mySplit = function(separator) {
+    const sym = Symbol('string');
+    let selfString = {
+        [sym]: this,
+    };
+
+    let result = [];
+    let item = '';
+
+    for(let i of selfString[sym]){
+        item += i;
+
+        if (separator === '') {
+            result = [...selfString[sym]];
+        }
+
+        if (i === separator) {
+
+            let itemWithoutSeparator = '';
+
+            for(let j = 0; j < item.length - 1; j++){
+                itemWithoutSeparator += item[j];
+            };
+
+            result.push(itemWithoutSeparator)
+            item = '';    
+        };
+    };
+
+    return result;
+};
+
+// Создаю свой метод для  сортировки массива
+
+Array.prototype.mySort = function(callback) {
+    const sym = Symbol('array');
+    let selfArray = {
+        [sym]: this
+    };
+
+    for(let i = 0; i <= selfArray[sym].length; i++){
+        for(let j = i+1; j <= selfArray[sym].length; j++){
+
+            if (callback(selfArray[sym][i], selfArray[sym][j])) {
+                [selfArray[sym][i], selfArray[sym][j]] = [selfArray[sym][j], selfArray[sym][i]] 
+            };
+        };
+    };
+
+    return selfArray[sym];    
+}
+
+
+// Создаю свой метод для обьеденение элементов массива в строку
+
+Array.prototype.myJoin = function(separator) {
+    const sym = Symbol('array');
+    let selfArray ={
+        [sym]: this,
+    };
+
+    let word = '';
+    let result = '';
+
+    for(let i of selfArray[sym]){
+        word += (`${i}${separator}`);
+        
+    };
+
+    for(let i = 0; i< word.length -1; i++ ){
+        result += word[i];
+    };
+    return separator === '' ? word : result;
+};
+
+
+
 const checkIsAnagram = (firstString, secondString) => {
-    if (firstString.length != secondString.length) {
+
+    if ((typeof firstString !== 'string' || typeof secontString !== 'string')) {
         return false;
-    }
-    ;
-    let sortFirstString = firstString.split('').sort().join('');
-    let sortSecondString = secondString.split('').sort().join('');
+    };
+
+    if ( (firstString.length != secondString.length)) {
+        return false;
+    };
+
+    let sortFirstString = firstString.toLowerCase().mySplit('').mySort((a,b) => a > b).myJoin('');
+    let sortSecondString = secondString.toLowerCase().mySplit('').mySort((a,b) => a > b).myJoin('');
+  
     return sortFirstString === sortSecondString;
 };
+
 // 3 Написать функцию которая вычисляет подсчет количество цифр в числе. Реализовать с помощью рекурсии.
 // *** РЕКУРСИЯ
+
 const getAmountDigitRec = (number, amount) => {
     amount = amount || 1;
     if (number <= amount) {
@@ -19,18 +107,39 @@ const getAmountDigitRec = (number, amount) => {
     ;
     return getAmountDigit(number / 10, ++amount);
 };
+
 // *** НЕ РЕКУРСИЯ
 const getAmountDigit = (number) => {
     let stringCopyNumber = new String(number);
     let lengthNumber = stringCopyNumber.length;
     return lengthNumber;
 };
+
+
 // 4) Реализовать функцию которая проверяет, является ли строка палиндромом 
+
+// создаю свой метод для развертывания строки
+
+String.prototype.myReverse = function(){
+    const sym = Symbol('string');
+    let selfString = {
+        [sym] : this
+    }
+    let result = '';
+
+    for(let i = selfString[sym].length - 1; i >= 0; i--){
+        result += selfString[sym][i];
+    };
+
+    return result;
+};
+
 const checkIsPolindrome = (string) => {
     let lowerCaseString = string.toLowerCase();
-    let reverseString = lowerCaseString.split('').reverse().join('');
+    let reverseString = lowerCaseString.myReverse();
     return reverseString === lowerCaseString;
 };
+
 // 5 Написать функцию которая вычисляет подсчет уникальных слов в предложении
 const getAmountUniqWords = (sentece) => {
     const senteceWithoutSymbols = sentece.replace(/[.,!?:;]/gi, '');
@@ -314,8 +423,8 @@ const parseInBinary = (value) => {
     for (; value > 0;) {
         result += value % 2;
         value = Math.floor(value / 2);
-    }
-    ;
+    };
+
     return result.split('').reverse().join('');
 };
 const parseInDecimal = (value) => {
@@ -544,8 +653,6 @@ const removeColumnWithZero = (matrix) => {
 const removeRowZero = (matrix) => {
     let result = [];
     for (let row of matrix) {
-        console.log(row);
-        // @ts-ignore
         if (row.includes(0) === false) {
             result.push(row);
         }
@@ -633,16 +740,18 @@ const getMeanMatrix = (matrix) => {
         numbersAbove.push(...valueAbove);
         let valueUnder = copyMatrixUnder[i].reverse().slice(i + 1);
         numbersUnder.push(...valueUnder);
-    }
-    ;
+    };
+
     for (let k = 0; k <= numbersAbove.length - 1; k++) {
         result["mean-above-diagonal"] += +numbersAbove[k];
         result["mean-under-diagonal"] += +numbersUnder[k];
-    }
-    ;
+    };
+
     result["mean-diagonal"] = +((result["mean-above-diagonal"] / matrix.length).toFixed(2));
     result["mean-above-diagonal"] = +((result["mean-above-diagonal"] / numbersAbove.length).toFixed(2));
     result["mean-under-diagonal"] = +((result["mean-under-diagonal"] / numbersUnder.length).toFixed(2));
+
+
     return result;
 };
 ;
@@ -652,6 +761,7 @@ let iterObj = {
         let num1 = 1;
         let num2 = 1;
         let flag = true;
+
         while (flag) {
             let current = num2;
             num2 = num1;
@@ -659,20 +769,97 @@ let iterObj = {
             yield current;
             if (current == Infinity) {
                 flag = false;
-            }
+            };
         }
-    }
+    },
 };
+
+
 let iterator = iterObj[Symbol.iterator]();
+
 // ****Рекурсивная функция для вычисления чисел фибоначи
+
 const getFibonacci = (value) => {
     if (value <= 1) {
         return 1;
     }
     return getFibonacci(value - 1) + getFibonacci(value - 2);
 };
+
 // ***Мемоизированная функцию для вычисления чисел фибоначчи
 const memooize = (fn) => {
     const cache = {};
     return (n) => cache[n] || (cache[n] = fn(n));
 };
+const memoFib = memoize(getFibonacci);
+
+
+// 19 Реализовать с помощью итератора и генератора светофор. 
+// При каждой следующей итерации мы должны получать следующий корректный цвет по логике светофора.
+
+ // Реализовать с помощью  генератора светофор. 
+
+function* getLights(){
+    let colors =['yellow','red','yellow','green'];
+    for(let color of colors){
+        yield color;
+    }
+    yield* getLights();
+};
+
+const lightsIterator = getLights(); 
+
+
+ // Реализовать с помощью итератора светофор. 
+
+ const lights = {
+    colors: ['yellow','red','yellow', 'green'],  
+
+    [Symbol.iterator](){
+        return {
+            colors: this.colors,
+            index: 0,
+            next(){
+
+                if (this.index === this.colors.length) {
+                    this.index = 0;
+                };
+
+                if (this.index <= this.colors.length) {
+                    return {
+                        value: this.colors[this.index++],
+                        done: false
+                    };
+                };
+            },
+        };
+    },    
+};
+
+// 20 Определить является ли число отрицательным или положительным
+//  без сравнения на больше/меньше нуля (побитово)
+
+
+const checkIsNegative = (number) => {
+    return !!(number >> number);
+};
+ 
+ // 20 Написать свою реализацию для ~,
+
+ // Способ №1
+
+ const replaceBit = (number) => { return number ^ -1;};
+
+  // Способ №2
+
+  // 20 Посчитать количество битов установленных в 1
+
+  const getAmountOne = (number) => {
+    let result = 0;
+    
+    for(;number;) {
+        result++;
+        number = number & number -1;
+    };
+    return result;
+  };
