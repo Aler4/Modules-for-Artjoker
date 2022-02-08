@@ -30,7 +30,7 @@ const checkIsAnagram = (firstString, secondString) => {
 // 3 Написать функцию которая вычисляет подсчет количество цифр в числе. Реализовать с помощью рекурсии.
 // *** РЕКУРСИЯ
 
-const getAmountDigitRec = (number, amount) => {
+const amountDigitRec = (number, amount) => {
     if (typeof number !== 'number') {
         throw new Error('Wrong data type entries');
     };
@@ -40,12 +40,12 @@ const getAmountDigitRec = (number, amount) => {
         return amount;
     };
 
-    return getAmountDigit(number / 10, ++amount);
+    return amountDigitRec(number / 10, ++amount);
 };
 
 // *** НЕ РЕКУРСИЯ
 
-const getAmountDigit = (number) => {
+const amountDigit = (number) => {
     let stringCopyNumber = new String(number);
     let lengthNumber = stringCopyNumber.length;
     return lengthNumber;
@@ -82,7 +82,6 @@ const checkIsPolindrome = (string) => {
 };
 
 // 5 Написать функцию которая вычисляет подсчет уникальных слов в  // Создаю свой метод для  разбития строки на массив
-
 
 
 // Создаю свой метод для  разбития строки на массив
@@ -150,7 +149,7 @@ const amountUniqWords = (sentence) => {
 
 // 6 Написать функцию которая вычисляет вхождение каждого слова в предложение;
 
-const getAmountWords = (sentence) => {
+const amountWords = (sentence) => {
     if (typeof sentence !== 'string') {
         throw new Error('Wrong data type')
     };
@@ -171,7 +170,7 @@ const getAmountWords = (sentence) => {
     ;
     return amount;
 };
-// @ts-ignore
+
 const TriangleFunc = function (sideA, sideB, sideC) {
     this.sideA = sideA;
     this.sideB = sideB;
@@ -194,10 +193,8 @@ const TriangleFunc = function (sideA, sideB, sideC) {
         throw new Error('Wrong value');
     };
 };
-;
-let triangle = new TriangleFunc(1, 70, 60);
-;
-// @ts-ignore
+
+
 const RectangleFunc = function (height, width) {
     this.height = height;
     this.width = width;
@@ -216,9 +213,7 @@ const RectangleFunc = function (height, width) {
         throw new Error('Wrong data');
     };
 };
-let rectangle = new RectangleFunc(5, 8);
-;
-// @ts-ignore
+
 const CircleFunc = function (radius = 0) {
     this.radius = radius;
     this.area = () => {
@@ -236,7 +231,6 @@ const CircleFunc = function (radius = 0) {
         throw new Error('Wrong data');
     };
 };
-let circle = new CircleFunc(40);
 
 // // // // ***Классы
 // //
@@ -271,12 +265,11 @@ class Triangle {
             let halfPerimetr = (this.sideA + this.sideB + this.sideC) * 0.5;
             let square = Math.floor(Math.sqrt(halfPerimetr * ((halfPerimetr - this.sideA) * (halfPerimetr - this.sideB) * (halfPerimetr - this.sideC))));
             return square;
-        }
-        ;
+        };
+
         throw new Error('Wrong value');
     }
-}
-;
+};
 // // ***Прямоугольника
 class Rectangle {
     constructor(sideA, sideB) {
@@ -302,6 +295,7 @@ class Rectangle {
 // //
 // // // *** Круг
 // //
+
 class Circle {
     constructor(radius) {
         this.radius = radius;
@@ -340,9 +334,9 @@ const memo = (callback) => {
 
     const cache = {};
     return (n) => cache[n] || (cache[n] = callback(n));
-}
-;
-let getFact = memo(mountFactorial);
+};
+
+let memoizeFactorial = memo(mountFactorial);
 
 // *** Цыкл
 const factorial = (number) => {
@@ -364,7 +358,8 @@ const factorial = (number) => {
 // которые только положительные и нечетные), реализовать с помощью рекурсии для одномерного массива.
 
 // ***РЕКУРСИЯ
-const getSum = (array, callback) => {
+
+const sumItemArray = (array, callback) => {
 
     if (typeof value !== 'number' || value < 0) {
         throw new Error('Wrong data type')
@@ -387,16 +382,17 @@ const getSum = (array, callback) => {
 };
 
 // Кратные двум
-const getSumMultipleTwo = (array) => getSum(array, (item) => item % 2 === 0);
+const sumItemArrayMultipleTwo = (array) => sumItemArray(array, (item) => item % 2 === 0);
 
 // Кратные трем,
-const getSumMultipleThree = (array) => getSum(array, (item) => item % 3 === 0);
+const sumItemArrayMultipleThree = (array) => sumItemArray(array, (item) => item % 3 === 0);
 
 // которые только положительные и нечетные
-const getSumPositiveNotEven = (array) => getSum(array, (item) => item > 0);
+const sumItemArrayPositiveNotEven = (array) => sumItemArray(array, (item) => item > 0);
+
 // *** ЦЫКЛ
 
-const getSumCycle = (array, callback) => {
+const sumItemArrayCycle = (array, callback) => {
 
     if (typeof value !== 'number' || value < 0) {
         throw new Error('Wrong data type')
@@ -411,16 +407,16 @@ const getSumCycle = (array, callback) => {
 };
 
 // Кратные двум
-const getSumMultipleTwoCycle = (array) => getSumCycle(array, (item) => item % 2 === 0);
+const sumItemArrayultipleTwoCycle = (array) => sumItemArrayCycle(array, (item) => item % 2 === 0);
 
 // Кратные трем,
-const getSumMultipleThreeCycle = (array) => getSumCycle(array, (item) => item % 3 === 0);
+const sumItemArrayMultipleThreeCycle = (array) => sumItemArrayCycle(array, (item) => item % 3 === 0);
 
 // которые только положительные и нечетные
-const getSumPositiveNotEvenCycle = (array) => getSumCycle(array, (item) => item > 0 && item % 2 !== 0);
+const sumItemArrayPositiveNotEvenCycle = (array) => sumItemArrayCycle(array, (item) => item > 0 && item % 2 !== 0);
 
 // 10 Посчитать количество элементов массива которые (Нулевые, отрицательные, положительные, простые числа)
-const getAmount = (array, callback) => {
+const amountItemArray = (array, callback) => {
 
     if (!(Array.isArray(array)) || typeof callback !== 'function') {
         throw new Error('Wrong data type')
@@ -436,16 +432,16 @@ const getAmount = (array, callback) => {
 };
 
 // Нулевые
-const getAmountZero = (array) => getAmount(array, (item) => item === 0);
+const amountItemArrayZero = (array) => amountItemArray(array, (item) => item === 0);
 
 //  Отрицательные
-const getAmountNegative = (array) => getAmount(array, (item) => item < 0);
+const amountItemArrayNegative = (array) => amountItemArray(array, (item) => item < 0);
 
 //  Положительные
-const getAmountPositive = (array) => getAmount(array, (item) => item > 0);
+const amountItemArrayPositive = (array) => amountItemArray(array, (item) => item > 0);
 
 //  Простые числа
-const getAmountSimpleNumbers = (array) => getAmount(array, (item) => {
+const amountItemArraySimpleNumbers = (array) => amountItemArray(array, (item) => {
     for (let i = 2; i < item; i++) {
         if (item % i === 0)
             return false;
@@ -493,7 +489,7 @@ const parseInDecimal = (value) => {
 // которые только положительные и нечетные), реализовать с помощью рекурсии для одномерного массива.
 
 
-const getSumTwoDimensional = (array, callback) => {
+const sumItemArrayTwoDimensional = (array, callback) => {
 
     if ((!Array.isArray(array)) || typeof callback !== 'function') {
         throw new Error('Wrong data type')
@@ -513,7 +509,7 @@ const getSumTwoDimensional = (array, callback) => {
         };
 
         if (Array.isArray(item)) {
-            return result += getSum(item, callback);
+            return result += mountSum(item, callback);
         };
 
         if (callback(item)) {
@@ -534,24 +530,24 @@ const getSumTwoDimensional = (array, callback) => {
 };
 
 
-const getSumTwoDimensionalMultipleTwo = (array) => getSumTwoDimensional(array, (item) => item % 2 === 0);
+const sumItemArrayTwoDimensionalMultipleTwo = (array) => sumItemArrayTwoDimensional(array, (item) => item % 2 === 0);
 
 // Кратные трем,
-const getSumTwoDimensionalMultipleThree = (array) => getSumTwoDimensional(array, (item) => item % 3 === 0);
+const sumItemArrayTwoDimensionalMultipleThree = (array) => sumItemArrayTwoDimensional(array, (item) => item % 3 === 0);
 
 // которые только положительные и нечетные
-const getSumTwoDimensionalPositiveNotEven = (array) => getSumTwoDimensional(array, (item) => item > 0);
+const sumItemArrayTwoDimensionalPositiveNotEven = (array) => sumItemArrayTwoDimensional(array, (item) => item > 0);
 
 // *** ЦЫКЛ
 
-const getSumTwoDimensionalCycle = (array, callback) => {
+const sumItemArrayTwoDimensionalCycle = (array, callback) => {
     if ((!Array.isArray(array)) || typeof callback !== 'function') {
         throw new Error('Wrong data type')
     };
     let result = 0;
     for (let i = 0; i <= array.length; i++) {
         if (Array.isArray(array[i])) {
-            result += getSumTwoDimensionalCycle(array[i], callback);
+            result += sumItemArrayTwoDimensionalCycle(array[i], callback);
         }
         if (callback(array[i]) === true) {
             result += array[i];
@@ -561,16 +557,20 @@ const getSumTwoDimensionalCycle = (array, callback) => {
 };
 
 // // Кратные двум
-const getSumTwoDimensionalMultipleTwoCycle = (array) => getSumTwoDimensionalCycle(array, (item) => item % 2 === 0);
+const sumItemArrayTwoDimensionalMultipleTwoCycle = (array) => sumItemArrayTwoDimensionalCycle(array, (item) => item % 2 === 0);
 
 // Кратные трем,
-const getSumTwoDimensionalMultipleThreeCycle = (array) => getSumTwoDimensionalCycle(array, (item) => item % 3 === 0);
+const sumItemArrayTwoDimensionalMultipleThreeCycle = (array) => sumItemArrayTwoDimensionalCycle(array, (item) => item % 3 === 0);
 
 // которые только положительные и нечетные
-const getSumTwoDimensionalositiveNotEvenCycle = (array) => getSumTwoDimensionalCycle(array, (item) => item > 0 && item % 2 !== 0);
+const sumItemArrayTwoDimensionalositiveNotEvenCycle = (array) => sumItemArrayTwoDimensionalCycle(array, (item) => item > 0 && item % 2 !== 0);
+
+
 
 // 12-10) Посчитать количество элементов ДВУХМЕРНОГО массива которые (Нулевые, отрицательные, положительные, простые числа)
-const getAmountTwoDimensional = (array, callback) => {
+
+
+const amountItemArrayTwoDimensional = (array, callback) => {
 
     if ((!Array.isArray(array)) || typeof callback !== 'function') {
         throw new Error('Wrong data type')
@@ -579,7 +579,7 @@ const getAmountTwoDimensional = (array, callback) => {
     let amount = 0;
     for (let index in array) {
         if (Array.isArray(array[index])) {
-            getAmountTwoDimensional(array[index], callback);
+            amountItemArrayTwoDimensional(array[index], callback);
         }
         ;
         if (callback(array[index]))
@@ -589,16 +589,16 @@ const getAmountTwoDimensional = (array, callback) => {
 };
 
 // Нулевые
-const getAmountTwoDimensionalZero = (array) => getAmount(array, (item) => item === 0);
+const amountItemArrayTwoDimensionalZero = (array) => amountItemArrayTwoDimensional(array, (item) => item === 0);
 
 //  Отрицательные
-const getAmountTwoDimensionalNegative = (array) => getAmount(array, (item) => item < 0);
+const amountItemArraytTwoDimensionalNegative = (array) => amountItemArrayTwoDimensional(array, (item) => item < 0);
 
 //  Положительные
-const getAmountTwoDimensionalPositive = (array) => getAmount(array, (item) => item > 0);
+const amountItemArrayTwoDimensionalPositive = (array) => amountItemArrayTwoDimensional(array, (item) => item > 0);
 
 //  Простые числа
-const getAmountTwoDimensionalSimpleNumbers = (array) => getAmount(array, (item) => {
+const amountItemArrayTwoDimensionalSimpleNumbers = (array) => amountItemArrayTwoDimensional(array, (item) => {
     for (let i = 2; i < item; i++) {
         if (item % i === 0)
             return false;
@@ -611,7 +611,7 @@ const getAmountTwoDimensionalSimpleNumbers = (array) => getAmount(array, (item) 
 //  Нарисовать блок схему. Реализовать также с помощью рекурсии. Реализовать мемоизированную функцию.
 // **** Рекурсия + мемоизация 
 
-const getSumRange = (min, max, callback, result) => {
+const sumRange = (min, max, callback, result) => {
 
      if ((typeof min !== 'number' || typeof max !== number) || max < min) {
         throw new Error('Wrong data entries')
@@ -627,7 +627,7 @@ const getSumRange = (min, max, callback, result) => {
         result += min;
     }
     ;
-    return getSumRange(min += 1, max, callback, result);
+    return sumRange(min += 1, max, callback, result);
 };
 
 const memoize = (callback) => {
@@ -642,20 +642,20 @@ const memoize = (callback) => {
 };
 
 // всех
-const getSumRangeAll = (min, max) => getSumRange(min, max, (item) => item);
-let getSumRangeAllMemo = memoize(getSumRangeAll);
+const sumRangeAll = (min, max) => sumRange(min, max, (item) => item);
+let sumRangeAllMemo = memoize(sumRangeAll);
 
 // Tолько тех которые кратны 3
-const getSumRangeMultThree = (min, max) => getSumRange(min, max, (item) => item % 3 === 0);
-let getSumRangeMultThreeMemo = memoize(getSumRangeMultThree);
+const sumRangeMultThree = (min, max) => sumRange(min, max, (item) => item % 3 === 0);
+let sumRangeMultThreeMemo = memoize(sumRangeMultThree);
 
 // только положительные
-const getSumRangePositive = (min, max) => getSumRange(min, max, (item) => item > 0);
-let getSumRangePositiveMemo = memoize(getSumRangeMultThree);
+const sumRangePositive = (min, max) => sumRange(min, max, (item) => item > 0);
+let sumRangePositiveMemo = memoize(sumRangePositive);
 
 // Цыкл
 
-const getSumRangeCycle = (min, max, callback) => {
+const sumRangelCycle = (min, max, callback) => {
     if ((typeof min !== 'number' || typeof max !== number) || max < min) {
         throw new Error('Wrong data entries')
     };
@@ -672,19 +672,19 @@ const getSumRangeCycle = (min, max, callback) => {
 };
 
 // всех
-const getSumRangeAllCycle = (min, max) => getSumRangeCycle(min, max, (item) => item);
+const sumRangeAllCycle = (min, max) => sumRangelCycle(min, max, (item) => item);
 
 // Tолько тех которые кратны 3
-const getSumRangeMultThreeCycle = (min, max) => getSumRangeCycle(min, max, (item) => item % 3 === 0);
+const sumRangeMultThreeCycle = (min, max) => sumRangelCycle(min, max, (item) => item % 3 === 0);
 
 // только положительные
-const getSumRangePositiveCycle = (min, max) => getSumRangeCycle(min, max, (item) => item > 0);
+const sumRangePositiveCycle = (min, max) => sumRangelCycle(min, max, (item) => item > 0);
 
 
 // 14 Найти среднее значение всех элементов одномерного/двумерного массива 
 // (Среднее только тех которые четные и которые не четные).
 
-const getMean = (array, callback) => {
+const mean = (array, callback) => {
     if(!(Array.isArray(array)) || typeof callback !== 'function'){
         throw new Error('Wrong data entries')
     };
@@ -714,10 +714,10 @@ const getMean = (array, callback) => {
 };
 
 // Среднее только тех которые четные
-const getMeanEvent = (array) => getMean(array, (item) => item % 2 === 0);
+const meanEvent = (array) => mean(array, (item) => item % 2 === 0);
 
 // Среднее только тех которые не четные
-const getMeanNotEvent = (array) => getMean(array, (item) => item % 2 !== 0);
+const meanNotEvent = (array) => mean(array, (item) => item % 2 !== 0);
 
 // 15)Транспонировать матрицу, сложить две матрицы.
 // ***Транспонирование матрицы
@@ -746,7 +746,7 @@ const transpositionMatrix = (matrix) => {
 
 // сложить две матрицы
 
-const getSumMatrix = (matrix1, matrix2) => {
+const sumMatrix = (matrix1, matrix2) => {
     if (!(Array.isArray(matrix1)) || !(Array.isArray(matrix2))) {
         throw new Error('Wrong data entries')
     };
@@ -811,7 +811,7 @@ const removeRowZero = (matrix) => {
 // элементов матрицы над и под главной диагональю и на главной диагональю.
 // Посчитать сумму  над и под главной диагональю и на главной диагональю
 
-const getSumFromMatrix = (matrix) => {
+const sumFromMatrix = (matrix) => {
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries')
     };
@@ -842,9 +842,10 @@ const getSumFromMatrix = (matrix) => {
     ;
     return result;
 };
+
 // Посчитать количество нулевых элементов
 // // элементов матрицы над и под главной диагональю и на главной диагональю.
-const getAmountZeroMatrix = (matrix) => {
+const amountZeroMatrix = (matrix) => {
 
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries')
@@ -881,7 +882,7 @@ const getAmountZeroMatrix = (matrix) => {
     return result;
 };
 // Посчитать среднее значение элементов матрицы над и под главной диагональю и на главной диагональю.
-const getMeanMatrix = (matrix) => {
+const meanMatrix = (matrix) => {
 
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries')
@@ -917,8 +918,14 @@ const getMeanMatrix = (matrix) => {
 
     return result;
 };
-;
-let iterObj = {
+
+//18 Создать итерируемый объект, который на каждой итерации возвращает следующее значение числа фибоначчи
+//  (Реализовать с помощью итератора и генератора). Реализовать мемоизированную функцию. Реализовать с помощью рекурсии.
+
+
+// Создать итерируемый объект, который на каждой итерации возвращает следующее значение числа фибоначчи
+
+let fibonaciObj = {
     *[Symbol.iterator]() {
         let num1 = 1;
         let num2 = 1;
@@ -937,11 +944,11 @@ let iterObj = {
 };
 
 
-let iterator = iterObj[Symbol.iterator]();
+let iterator = fibonaciObj[Symbol.iterator]();
 
 // ****Рекурсивная функция для вычисления чисел фибоначи
 
-const getFibonacci = (value) => {
+const amountFibonacci = (value) => {
     if (typeof value !== 'number') {
         throw new Error('Wrong data type entries')
     };
@@ -950,7 +957,7 @@ const getFibonacci = (value) => {
         return 1;
     };
 
-    return getFibonacci(value - 1) + getFibonacci(value - 2);
+    return amountFibonacci(value - 1) + amountFibonacci(value - 2);
 };
 
 // ***Мемоизированная функцию для вычисления чисел фибоначчи
@@ -963,7 +970,7 @@ const memooize = (fn) => {
     const cache = {};
     return (n) => cache[n] || (cache[n] = fn(n));
 };
-const memoFib = memoize(getFibonacci);
+const memoFib = memoize(amountFibonacci);
 
 
 // 19 Реализовать с помощью итератора и генератора светофор. 
@@ -971,21 +978,21 @@ const memoFib = memoize(getFibonacci);
 
  // Реализовать с помощью  генератора светофор. 
 
-function* getLights(){
+function* lights(){
 
     let colors =['yellow','red','yellow','green'];
     for(let color of colors){
         yield color;
     }
-    yield* getLights();
+    yield* lights();
 };
 
-const lightsIterator = getLights(); 
+const lightsGenerator = lights(); 
 
 
  // Реализовать с помощью итератора светофор. 
 
- const lights = {
+ const lightsIterator = {
     colors: ['yellow','red','yellow', 'green'],  
 
     [Symbol.iterator](){
@@ -1015,7 +1022,7 @@ const lightsIterator = getLights();
 
 const checkIsNegative = (number) => {
 
-    if (typeof number !== number) {
+    if (typeof number !== 'number') {
         throw new Error('Wrong data type entries');
     }
     return !!(number >> number);
@@ -1048,7 +1055,7 @@ const convert = (number) => {
         
   // 20 Посчитать количество битов установленных в 1
 
-const getAmountBitOne = (number) => {
+const amountBitOne = (number) => {
     if (typeof number !== 'number' || number < 0) {
         throw new Error('Wrong data type entrie')
     };
@@ -1063,14 +1070,14 @@ const getAmountBitOne = (number) => {
 
   // 20 Посчитать количество битов установленных в 0
 
-const getAmountBitZero = (number) => {
+const amountBitZero = (number) => {
 
     if (typeof number !== 'number' || number < 0) {
         throw new Error('Wrong data type entries')
     };
 
     let bit = 1;
-    let bitInOne = getAmountBitOne(number);
+    let bitInOne = amountBitOne(number);
     let result = 0;
     for(let i = 0; i <= number; i++){
         result++;
