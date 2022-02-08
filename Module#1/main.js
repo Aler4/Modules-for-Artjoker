@@ -1,43 +1,6 @@
 'use strict';
 // 1) Написать функцию которая проверяет являются две строки анаграммой или нет
 
- // Создаю свой метод для  разбития строки на массив
-
-String.prototype.mySplit = function(separator) {
-
-    const sym = Symbol('string');
-    let selfString = {
-        [sym]: this,
-    };
-
-    let result = [];
-    let item = '';
-
-    for(let i of selfString[sym]){
-        item += i;
-
-        if (separator === '') {
-            result = [...selfString[sym]];
-        }
-
-        if (i === separator) {
-
-            let itemWithoutSeparator = '';
-
-            for(let j = 0; j < item.length - 1; j++){
-                itemWithoutSeparator += item[j];
-            };
-
-            result.push(itemWithoutSeparator)
-            item = '';    
-        };
-    };
-
-    return result;
-};
-
-// Создаю свой метод для  сортировки массива
-
 const checkIsAnagram = (firstString, secondString) => {
 
      if (typeof firstString !== 'string' || typeof secondString !== 'string') {
@@ -62,8 +25,8 @@ const checkIsAnagram = (firstString, secondString) => {
     }
 
     return copySecondString.length === 0;
+};
 
-}
 // 3 Написать функцию которая вычисляет подсчет количество цифр в числе. Реализовать с помощью рекурсии.
 // *** РЕКУРСИЯ
 
@@ -108,8 +71,6 @@ String.prototype.myReverse = function(){
     return result;
 };
 
-// Проверяю палиндром ли
-
 const checkIsPolindrome = (string) => {
     if (typeof string !== 'string') {
         throw new Error('Wrong data type')
@@ -120,7 +81,45 @@ const checkIsPolindrome = (string) => {
     return reverseString === lowerCaseString;
 };
 
-// 5 Написать функцию которая вычисляет подсчет уникальных слов в предложении
+// 5 Написать функцию которая вычисляет подсчет уникальных слов в  // Создаю свой метод для  разбития строки на массив
+
+
+
+// Создаю свой метод для  разбития строки на массив
+String.prototype.mySplit = function(separator) {
+
+    const sym = Symbol('string');
+
+    let selfString = {
+        [sym]: this,
+    };
+
+    let result = [];
+    let item = '';
+
+    for(let i of selfString[sym]){
+        item += i;
+
+        if (separator === '') {
+            result = [...selfString[sym]];
+        }
+
+        if (i === separator) {
+
+            let itemWithoutSeparator = '';
+
+            for(let j = 0; j < item.length - 1; j++){
+                itemWithoutSeparator += item[j];
+            };
+
+            result.push(itemWithoutSeparator)
+            item = '';    
+        };
+    };
+
+    return result;
+};
+ 
 
 const amountUniqWords = (sentence) => {
     if (typeof sentence !== 'string' || (sentence.length <= 1)) {
@@ -128,7 +127,7 @@ const amountUniqWords = (sentence) => {
     };
 
     const senteceWithoutSymbols = sentence.replace(/[.,!?:;]/gi, '');
-    let words = senteceWithoutSymbols.split(' ');
+    let words = senteceWithoutSymbols.mySplit(' ');
     let uniqWords = [];
 
     for (let i = 0; i <= words.length - 1; i++) {
@@ -151,7 +150,7 @@ const amountUniqWords = (sentence) => {
 
 // 6 Написать функцию которая вычисляет вхождение каждого слова в предложение;
 
-const amountWords = (sentence) => {
+const getAmountWords = (sentence) => {
     if (typeof sentence !== 'string') {
         throw new Error('Wrong data type')
     };
@@ -172,8 +171,7 @@ const amountWords = (sentence) => {
     ;
     return amount;
 };
-
-
+// @ts-ignore
 const TriangleFunc = function (sideA, sideB, sideC) {
     this.sideA = sideA;
     this.sideB = sideB;
@@ -196,7 +194,10 @@ const TriangleFunc = function (sideA, sideB, sideC) {
         throw new Error('Wrong value');
     };
 };
-
+;
+let triangle = new TriangleFunc(1, 70, 60);
+;
+// @ts-ignore
 const RectangleFunc = function (height, width) {
     this.height = height;
     this.width = width;
@@ -215,8 +216,9 @@ const RectangleFunc = function (height, width) {
         throw new Error('Wrong data');
     };
 };
-
-
+let rectangle = new RectangleFunc(5, 8);
+;
+// @ts-ignore
 const CircleFunc = function (radius = 0) {
     this.radius = radius;
     this.area = () => {
@@ -234,6 +236,7 @@ const CircleFunc = function (radius = 0) {
         throw new Error('Wrong data');
     };
 };
+let circle = new CircleFunc(40);
 
 // // // // ***Классы
 // //
@@ -272,10 +275,9 @@ class Triangle {
         ;
         throw new Error('Wrong value');
     }
-};
-
+}
+;
 // // ***Прямоугольника
-
 class Rectangle {
     constructor(sideA, sideB) {
         this.sideA = sideA;
@@ -295,10 +297,11 @@ class Rectangle {
         ;
         throw new Error('Wrong data');
     }
-};
-
+}
+;
+// //
 // // // *** Круг
-
+// //
 class Circle {
     constructor(radius) {
         this.radius = radius;
