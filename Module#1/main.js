@@ -57,9 +57,8 @@ const amountDigit = (number) => {
    let count = 1;
 
    while(Math.ceil(number) > count){
-    ++count;
-    number = number / 10;
-    
+        ++count;
+        number = number / 10; 
    }
 
    return count;
@@ -170,7 +169,7 @@ const amountUniqWords = (sentence) => {
 const amountWords = (sentence) => {
 
     if (typeof sentence !== 'string') {
-        throw new Error('Wrong data type')
+        throw new Error('Wrong data type');
     }
 
     const senteceWithoutSymbols = sentence.replace(/[.,!?:;]/gi, '');
@@ -304,7 +303,7 @@ class Triangle {
         let square = Math.floor(Math.sqrt(halfPerimetr * ((halfPerimetr - this.sideA) * (halfPerimetr - this.sideB) * (halfPerimetr - this.sideC))));
         return square;
     }
-};
+}
 
 // // ***Прямоугольника
 class Rectangle {
@@ -326,7 +325,7 @@ class Rectangle {
         
         return 2 * (this.width * this.height);
     }
-};
+}
 // //
 // // // *** Круг
 // //
@@ -348,7 +347,7 @@ class Circle {
     get area() {
         return Math.PI * (this.radius * this.radius);
     }
-};
+}
 
 // 8 Вычислить факториал числа. Реализовать с помощью рекурсии. Реализовать мемоизированную функцию вычисления факториала
 // *** РЕКУРСИЯ
