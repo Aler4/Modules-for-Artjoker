@@ -49,16 +49,19 @@ const amountDigitRec = (number, amount) => {
 // *** НЕ РЕКУРСИЯ
 
 const amountDigit = (number) => {
+
     if (typeof number !== 'number') {
         throw new Error('Wrong data type entries');
     }
 
    let count = 1;
-   for(;Math.ceil(number) > count;){
+
+   while(Math.ceil(number) > count){
     ++count;
     number = number / 10;
     
    }
+
    return count;
 };
 
@@ -69,10 +72,12 @@ const amountDigit = (number) => {
 // создаю свой метод для развертывания строки
 
 String.prototype.myReverse = function(){
+
     const sym = Symbol('string');
     let selfString = {
         [sym] : this
     }
+
     let result = '';
 
     for(let i = selfString[sym].length - 1; i >= 0; i--){
@@ -118,7 +123,7 @@ String.prototype.mySplit = function(separator) {
 
             for(let j = 0; j < item.length - 1; j++){
                 itemWithoutSeparator += item[j];
-            };
+            }
 
             result.push(itemWithoutSeparator)
             item = '';    
@@ -130,11 +135,13 @@ String.prototype.mySplit = function(separator) {
  
 
 const amountUniqWords = (sentence) => {
+
     if (typeof sentence !== 'string' || (sentence.length <= 1)) {
         throw new Error('Wrong data type');
     }
 
     const senteceWithoutSymbols = sentence.replace(/[.,!?:;]/gi, '');
+
     let words = senteceWithoutSymbols.mySplit(' ');
     let uniqWords = [];
 
@@ -142,8 +149,10 @@ const amountUniqWords = (sentence) => {
         let checksWords = [];
 
         for (let j = 0; j <= words.length - 1; j++) {
-            if (words[i] == words[j])
+
+            if (words[i] == words[j]){
                 checksWords.push(words[j]);
+            }
         }
 
         if (checksWords.length <= 1) {
@@ -151,7 +160,7 @@ const amountUniqWords = (sentence) => {
         }
 
         checksWords = [];
-    };
+    }
 
     return uniqWords.length;
 };
@@ -159,6 +168,7 @@ const amountUniqWords = (sentence) => {
 // 6 Написать функцию которая вычисляет вхождение каждого слова в предложение;
 
 const amountWords = (sentence) => {
+
     if (typeof sentence !== 'string') {
         throw new Error('Wrong data type')
     }
@@ -166,6 +176,7 @@ const amountWords = (sentence) => {
     const senteceWithoutSymbols = sentence.replace(/[.,!?:;]/gi, '');
     let words = senteceWithoutSymbols.mySplit(' ');
     let amountWords = {};
+
     for (let i = 0; i <= words.length - 1; i++) {
         let checksWords = [];
 
@@ -185,18 +196,19 @@ const amountWords = (sentence) => {
 };
 
 
-const checkISTriangleSides = (sideA,sideB,sideC) => {
+const checkIStriangleSides = (sideA,sideB,sideC) => {
+    let isCorrect = false 
     if ((sideA > 0) && (sideB > 0) && (sideC > 0) &&
             ((sideA + sideB > sideC) && (sideB + sideC > sideA) && (sideA + sideC > sideB))){
-        return true;
+        isCorrect = true;
     }
 
-    return false;
-};
+    return isCorrect;
+}
 
 const TriangleFunc = function (sideA, sideB, sideC) {
 
-    if (!(checkISTriangleSides(sideA,sideB,sideC))){
+    if ( !(checkISTriangleSides(sideA,sideB,sideC)) ){
          throw new Error('Wrong value');
     } 
 
@@ -205,11 +217,9 @@ const TriangleFunc = function (sideA, sideB, sideC) {
     this.sideC = sideC;
 
     this.area = () => {
-            let halfPerimetr = (this.sideA + this.sideB + this.sideC) * 0.5;
-            let square = Math.floor(Math.sqrt(halfPerimetr * ((halfPerimetr - this.sideA) * (halfPerimetr - this.sideB) * (halfPerimetr - this.sideC))));
-            return square;
-
-       
+        let halfPerimetr = (this.sideA + this.sideB + this.sideC) * 0.5;
+        let square = Math.floor(Math.sqrt(halfPerimetr * ((halfPerimetr - this.sideA) * (halfPerimetr - this.sideB) * (halfPerimetr - this.sideC))));
+        return square;
     };
 
     this.perimeter = () => {
@@ -219,11 +229,13 @@ const TriangleFunc = function (sideA, sideB, sideC) {
 
 
 const checkIsRectangelSides = (height,width) => {
+    let isCorrect = false;
 
     if(height !== width && (height > 0 && width > 0)){
-        return true;
-    };
-    return false;
+        isCorrect = true;
+    }
+
+    return isCorrect;
 };
 
 const RectangleFunc = function (height, width) {
@@ -236,11 +248,11 @@ const RectangleFunc = function (height, width) {
     this.width = width;
 
     this.area = () => {
-            return this.height * this.width;
+        return this.height * this.width;
     };
 
     this.perimeter = () => {
-            return 2 * (this.sideA + this.sideB);
+        return 2 * (this.sideA + this.sideB);
     };
 };
 
@@ -283,21 +295,22 @@ class Triangle {
 
     get perimeter() {
     
-            return this.sideA + this.sideB + this.sideC;
+        return this.sideA + this.sideB + this.sideC;
         throw new Error('Wrong value');
     }
 
     get area() {
-            let halfPerimetr = (this.sideA + this.sideB + this.sideC) * 0.5;
-            let square = Math.floor(Math.sqrt(halfPerimetr * ((halfPerimetr - this.sideA) * (halfPerimetr - this.sideB) * (halfPerimetr - this.sideC))));
-            return square;
+        let halfPerimetr = (this.sideA + this.sideB + this.sideC) * 0.5;
+        let square = Math.floor(Math.sqrt(halfPerimetr * ((halfPerimetr - this.sideA) * (halfPerimetr - this.sideB) * (halfPerimetr - this.sideC))));
+        return square;
     }
 };
+
 // // ***Прямоугольника
 class Rectangle {
     constructor(height, width) {
 
-        if ( !(checkIsRectangelSides(height,width)) ){
+        if ( !(checkIsRectangelSides(height,width) ) ){
         throw new Error('Wrong data');
         } 
 
@@ -306,12 +319,12 @@ class Rectangle {
     }
 
     get perimeter() {
-            return this.width * this.height;
+        return this.width * this.height;
     }
 
     get area() {
         
-            return 2 * (this.width * this.height);
+        return 2 * (this.width * this.height);
     }
 };
 // //
@@ -357,14 +370,14 @@ const memo = (callback) => {
 
     const cache = {};
 
-    return (n) => {
+    return (number) => {
 
-        if (n in cache) { 
-            return cache[n];
+        if (number in cache) { 
+            return cache[number];
         }
 
-     return cache[n] = callback(n);
- };
+        return cache[number] = callback(number);
+    };
 };
 
 let memoizeFactorial = memo(mountFactorial);
@@ -411,7 +424,7 @@ const sumItemArray = (array, callback) => {
             result += item;
         }
 
-        return mountSum(index+1, result);
+        return mountSum(index++, result);
     };
     return mountSum(0, 0);
 };
@@ -454,18 +467,6 @@ const amountItemArray = (array, callback) => {
 };
 
 
-//  Простые числа
-const amountItemArraySimpleNumbers = (array) => amountItemArray(array, (item) => {
-
-    for (let i = 2; i < item; i++) {
-        if (item % i === 0){
-            return false;
-        }
-    }
-
-    return item > 1;
-});
-
 // 11) Написать функции которые преобразовывают число из десятичной системы счисления в двоичную и в обратную сторону. 
 // (Достаточно написать для целых положительных чисел)
 
@@ -477,7 +478,7 @@ const parseInBinary = (value) => {
 
     let result = '';
 
-    for (; value > 0;) {
+    while(value > 0) {
         result += value % 2;
         value = Math.floor(value / 2);
     }
@@ -507,37 +508,34 @@ const parseInDecimal = (value) => {
 // которые только положительные и нечетные), реализовать с помощью рекурсии для одномерного массива.
 
 
-const sumItemArrayTwoDimensional = (array, callback) => {
+const sumItemArrayTwoDimensional = (array, callback,index,result) => {
 
     if ((!Array.isArray(array)) || typeof callback !== 'function') {
         throw new Error('Wrong data type')
     }
 
-    const mountSum = function (index, result) {
-        index = index || 0;
-        result = result || 0;
-        let item = array[index];
-
-        if (typeof item !== 'number') {
+    index = index || 0;
+    result = result || 0;
+    let item = array[index];
+    
+    if (typeof item !== 'number') {
             throw new Error('Item of array has wrong type')
-        }
+    }
 
-        if (index >= array.length) {
-            return result;
-        }
+    if (index >= array.length) {
+        return result;
+    }
 
-        if (Array.isArray(item)) {
-            return result += mountSum(item, callback);
-        }
+    if (Array.isArray(item)) {
+        return result += sumItemArrayTwoDimensional(item, callback,index,result);
+    }
 
-        if (callback(item)) {
-            result += item;
-        }
+    if (callback(item)) {
+        result += item;
+    }
 
-        return mountSum(index += 1, result);
-    };
 
-    return mountSum(0, 0);
+    return sumItemArrayTwoDimensional(array, callback,index++,result);
     
 };
 
@@ -557,7 +555,7 @@ const sumItemArrayTwoDimensionalCycle = (array, callback) => {
             result += sumItemArrayTwoDimensionalCycle(array[i], callback);
         }
 
-        if (callback(array[i]) === true) {
+        if (callback(array[i])) {
             result += array[i];
         }
     }
@@ -581,7 +579,7 @@ const amountItemArrayTwoDimensional = (array, callback) => {
         }
 
         if (callback(array[index])){
-            amount += 1;
+            amount++;
         }
     }
     return amount;
@@ -635,7 +633,7 @@ const sumRangelCycle = (min, max, callback) => {
 
     let result = 0;
 
-    for (; min < max + 1;) {
+     while(min < max + 1) {
         if (callback(min)) {
             result += min;
             min++;
@@ -644,7 +642,6 @@ const sumRangelCycle = (min, max, callback) => {
 
     return result;
 };
-
 
 
 // 14 Найти среднее значение всех элементов одномерного/двумерного массива 
@@ -660,15 +657,16 @@ const mean = (array, callback) => {
     let checksDigits = array.reduce((acc, item) => {
 
         if (callback(item) && typeof item == 'number') {
-            acc.push(item);
+            acc.push(item)
         }
 
         if (Array.isArray(item)) {
+
             item.forEach(digit => {
                 if (callback(digit)) {
-                    acc.push(digit);
+                    acc.push(digit)
                 }
-            });
+            })
         }
 
         return acc;
@@ -690,47 +688,58 @@ const transpositionMatrix = (matrix) => {
         throw new Error('Wrong data entries')
     }
 
-    let result = [];
-    let rowLen = matrix.length;
-    let colLen = matrix[0].length;
+    let result = matrix;
 
-    for (let i = 0; i < colLen; i++) {
-        let row = [];
-        for (let j = 0; j < rowLen; j++) {
-            row.push(matrix[j][i]);
-            if (row.length == rowLen) {
+    if (matrix.length > 0) {
+        result = [];
+        let rowLen = matrix.length;
+        let colLen = matrix[0].length;
+
+        for (let i = 0; i < colLen; i++) {
+            let row = [];
+
+            for (let j = 0; j < rowLen; j++) {
+                row.push(matrix[j][i]);
+
+                if (row.length == rowLen) {
                 result.push(row);
+                }
+
             }
         }
     }
-
+    
     return result;
 };
 
 // сложить две матрицы
+const sumMatrixs = (matrix1, matrix2) => {
 
-const sumMatrix = (matrix1, matrix2) => {
-    if (!(Array.isArray(matrix1)) || !(Array.isArray(matrix2))) {
+    if ( !(Array.isArray(matrix1)) || !(Array.isArray(matrix2)) ) {
         throw new Error('Wrong data entries')
     }
 
-    if (matrix1.length === 0 || matrix2.length === 0 || (matrix1.length === 0 && matrix2.length === 0)) {
-        throw Error('Wrong arguments');
-    }
 
     let result = [];
-    let rowLen = matrix1.length;
-    let col = matrix1[0].length;
-    for (let i = 0; i < rowLen; i++) {
-        result[i] = [];
-        if (!(Array.isArray(matrix1[i])) && !(Array.isArray(matrix2[i]))) {
-            result[i].push(+matrix1[i] + +matrix2[i]);
-        }
+    if( (matrix1.length > 0 && matrix2.length > 0) && (matrix1.length === matrix2.length)) {
 
-        for (let j = 0; j < col; j++) {
+        let rowLen = matrix1.length;
+        let col = matrix1[0].length;
+
+        for (let i = 0; i < rowLen; i++) {
+
+            result[i] = [];
+
+            if (!(Array.isArray(matrix1[i])) && !(Array.isArray(matrix2[i]))) {
+            result[i].push(+matrix1[i] + +matrix2[i]);
+            }
+
+            for (let j = 0; j < col; j++) {
             result[i].push((matrix1[i][j] + matrix2[i][j]));
+            }
         }
-    };
+    }
+    
     return result;
 };
 //  16)Удалить из матрицы тот столбец который имеет хотя бы один нулевой элемент.
@@ -742,7 +751,7 @@ const removeColumnWithZero = (matrix) => {
     }
 
     let clone = matrix.map(arr => arr.slice());
-    let res = [];
+    let result = [];
     for (let i in clone) {
 
         if (clone[i].some((item) => item == 0)) {
@@ -751,17 +760,18 @@ const removeColumnWithZero = (matrix) => {
 
             for (let j in clone) {
                 clone[j].splice(pos, 1);
-                res[j] != clone[j] ? res.push(clone[j]) : null;
+                result[j] != clone[j] ? result.push(clone[j]) : null;
             }
-
         }
     }
+
     return res[0].length !== matrix[0].length ? res : matrix;
 };
 
 // 16 Удалить из матрицы  строку которая имеет хотя бы один нулевой элемент;
 
 const removeRowZero = (matrix) => {
+
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries')
     }
@@ -787,7 +797,7 @@ const sumFromMatrix = (matrix) => {
         throw new Error('Wrong data entries')
     }
 
-    let result = {
+    let results = {
         'sum-above-diagonal': 0,
         'sum-under-diagonal': 0,
         'sum-diagonal': 0,
@@ -802,7 +812,7 @@ const sumFromMatrix = (matrix) => {
     for (let i = 0; i <= matrix.length - 1; i++) {
 
         let numberDiagonal = matrix[i][i]
-        result["sum-diagonal"] += numberDiagonal;
+        results["sum-diagonal"] += numberDiagonal;
 
         let valueAbove = copyMatrixAbove[i].slice(i + 1);
         numbersAbove.push(...valueAbove);
@@ -813,8 +823,8 @@ const sumFromMatrix = (matrix) => {
 
     for (let k = 0; k <= numbersAbove.length - 1; k++) {
 
-        result["sum-above-diagonal"] += +numbersAbove[k];
-        result["sum-under-diagonal"] += +numbersUnder[k];
+        results["sum-above-diagonal"] += +numbersAbove[k];
+        results["sum-under-diagonal"] += +numbersUnder[k];
     }
 
     return result;
@@ -822,13 +832,14 @@ const sumFromMatrix = (matrix) => {
 
 // Посчитать количество нулевых элементов
 // // элементов матрицы над и под главной диагональю и на главной диагональю.
+
 const amountZeroMatrix = (matrix) => {
 
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries')
     }
 
-    const result = {
+    const results = {
         'zeros-above-diagonal': 0,
         'zeros-under-diagonal': 0,
         'zeros-diagonal': 0,
@@ -843,7 +854,7 @@ const amountZeroMatrix = (matrix) => {
     for (let i = 0; i <= matrix.length - 1; i++) {
 
         if (matrix[i][i] === 0){
-            result['zeros-diagonal'] += 1;
+            results['zeros-diagonal'] += 1;
         }
 
         let valueAbove = copyMatrixAbove[i].slice(i + 1);
@@ -851,19 +862,19 @@ const amountZeroMatrix = (matrix) => {
 
         let valueUnder = copyMatrixReverse[i].reverse().slice(i + 1);
         numbersUnder.push(...valueUnder);
-    };
+    }
 
     for (let k = 0; k <= numbersAbove.length - 1; k++) {
         if (+numbersAbove[k] === 0) {
-            result["zeros-above-diagonal"] += 1;
-        };
+            results["zeros-above-diagonal"] += 1;
+        }
 
         if (+numbersUnder[k] === 0) {
-            result["zeros-under-diagonal"] += 1;
-        };
-    };
+            results["zeros-under-diagonal"] += 1;
+        }
+    }
 
-    return result;
+    return results;
 };
 
 // Посчитать среднее значение элементов матрицы над и под главной диагональю и на главной диагональю.
@@ -871,9 +882,9 @@ const meanMatrix = (matrix) => {
 
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries')
-    };
+    }
 
-    let result = {
+    let results = {
         'mean-above-diagonal': 0,
         'mean-under-diagonal': 0,
         'mean-diagonal': 0,
@@ -889,7 +900,7 @@ const meanMatrix = (matrix) => {
     for (let i = 0; i <= matrix.length - 1; i++) {
 
         let numberDiagonal = matrix[i][i]
-        result["mean-diagonal"] += numberDiagonal;
+        results["mean-diagonal"] += numberDiagonal;
 
         let valueAbove = copyMatrixAbove[i].slice(i + 1);
         numbersAbove.push(...valueAbove);
@@ -900,16 +911,16 @@ const meanMatrix = (matrix) => {
     }
 
     for (let k = 0; k <= numbersAbove.length - 1; k++) {
-        result["mean-above-diagonal"] += +numbersAbove[k];
-        result["mean-under-diagonal"] += +numbersUnder[k];
+        resulst["mean-above-diagonal"] += +numbersAbove[k];
+        results["mean-under-diagonal"] += +numbersUnder[k];
     }
 
-    result["mean-diagonal"] = +((result["mean-above-diagonal"] / matrix.length).toFixed(2));
-    result["mean-above-diagonal"] = +((result["mean-above-diagonal"] / numbersAbove.length).toFixed(2));
-    result["mean-under-diagonal"] = +((result["mean-under-diagonal"] / numbersUnder.length).toFixed(2));
+    results["mean-diagonal"] = +((results["mean-above-diagonal"] / matrix.length).toFixed(2));
+    results["mean-above-diagonal"] = +((results["mean-above-diagonal"] / numbersAbove.length).toFixed(2));
+    results["mean-under-diagonal"] = +((results["mean-under-diagonal"] / numbersUnder.length).toFixed(2));
 
 
-    return result;
+    return results;
 };
 
 //18 Создать итерируемый объект, который на каждой итерации возвращает следующее значение числа фибоначчи
@@ -920,14 +931,14 @@ const meanMatrix = (matrix) => {
 
 let fibonaciObj = {
     *[Symbol.iterator]() {
-        let num1 = 1;
-        let num2 = 1;
+        let previous = 1;
+        let next = 0;
         let flag = true;
 
         while (flag) {
-            let current = num2;
-            num2 = num1;
-            num1 = num1 + current;
+            let current = next;
+            next = previous;
+            previous = previous + current;
             yield current;
             if (current == Infinity) {
                 flag = false;
@@ -942,27 +953,37 @@ let iterator = fibonaciObj[Symbol.iterator]();
 // ****Рекурсивная функция для вычисления чисел фибоначи
 
 const amountFibonacci = (value) => {
+
     if (typeof value !== 'number') {
         throw new Error('Wrong data type entries')
-    };
+    }
 
     if (value <= 1) {
         return 1;
-    };
+    }
 
     return amountFibonacci(value - 1) + amountFibonacci(value - 2);
 };
 
 // ***Мемоизированная функцию для вычисления чисел фибоначчи
-const memooize = (fn) => {
+
+const memooize = (callback) => {
 
     if (typeof fn !== 'function') {
         throw new Error('Wrong data type entries');
-    };
+    }
 
     const cache = {};
-    return (n) => cache[n] || (cache[n] = fn(n));
+
+    return (number) => {
+
+        if(number in cache) {
+        return cache[number];
+        }
+        return cache[number] = callback(number);
+    };
 };
+
 const memoFib = memoize(amountFibonacci);
 
 
@@ -996,14 +1017,14 @@ const lightsGenerator = lights();
 
                 if (this.index === this.colors.length) {
                     this.index = 0;
-                };
+                }
 
                 if (this.index <= this.colors.length) {
                     return {
                         value: this.colors[this.index++],
                         done: false
                     };
-                };
+                }
             },
         };
     },    
@@ -1017,7 +1038,7 @@ const checkIsNegative = (number) => {
 
     if (typeof number !== 'number') {
         throw new Error('Wrong data type entries');
-    };
+    }
 
     return !!(number >> number);
 };
@@ -1030,7 +1051,7 @@ const checkIsNegative = (number) => {
 
     if (typeof number !== 'number') {
     throw new Error('Wrong data entries')
-    };
+    }
 
     return number ^ -1;
 };
@@ -1038,13 +1059,16 @@ const checkIsNegative = (number) => {
   // Способ №2
 
 const convert = (number) => {
+
     if (typeof number !== 'number') {
         throw new Error('Wrong data type entries')
     }
+
     if (checkIsNegative(number)) {
         return number + Math.abs(number * 2) - 1;
-    };
-        return number - (Math.abs(number * 2) + 1);  
+    }
+
+    return number - (Math.abs(number * 2) + 1);  
 };
         
   // 20 Посчитать количество битов установленных в 1
@@ -1052,17 +1076,17 @@ const convert = (number) => {
 const amountBitOne = (number) => {
     if (typeof number !== 'number' || number < 0) {
         throw new Error('Wrong data type entrie')
-    };
+    }
 
     let result = 0;
 
     for(;number;) {
         result++;
         number &= number -1;
-    };
+    }
 
     return result;
-  };
+};
 
   // 20 Посчитать количество битов установленных в 0
 
@@ -1070,7 +1094,7 @@ const amountBitZero = (number) => {
 
     if (typeof number !== 'number' || number < 0) {
         throw new Error('Wrong data type entries')
-    };
+    }
 
     let bit = 1;
     let bitInOne = amountBitOne(number);
@@ -1082,5 +1106,5 @@ const amountBitZero = (number) => {
         if (bit >= number) {
             return (result - bitInOne);
         }
-    };
+    }
 };
