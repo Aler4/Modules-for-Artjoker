@@ -1,15 +1,16 @@
 'use strict';
+
 // 1) Написать функцию которая проверяет являются две строки анаграммой или нет
 
 const checkIsAnagram = (firstString, secondString) => {
 
      if (typeof firstString !== 'string' || typeof secondString !== 'string') {
          throw new Error('Wrong data type entries');
-     };
+     }
 
      if ( (firstString.length != secondString.length)) {
          return false;
-     };
+     }
 
     let copySecondString = secondString.toLowerCase();
     let copyFirstString = firstString.toLowerCase();
@@ -19,8 +20,8 @@ const checkIsAnagram = (firstString, secondString) => {
         for(let j = 0; j <= copySecondString.length;j++){
 
             if (copyFirstString[i] === copySecondString[j]) {
-                copySecondString = copySecondString.replace(firstString[i],'');
-            };
+                copySecondString = copySecondString.replace(copyFirstString[i],'');
+            }
         }
     }
 
@@ -31,14 +32,16 @@ const checkIsAnagram = (firstString, secondString) => {
 // *** РЕКУРСИЯ
 
 const amountDigitRec = (number, amount) => {
+
     if (typeof number !== 'number') {
         throw new Error('Wrong data type entries');
-    };
+    }
 
     amount = amount || 1;
+
     if (number <= amount) {
         return amount;
-    };
+    }
 
     return amountDigitRec(number / 10, ++amount);
 };
@@ -46,9 +49,17 @@ const amountDigitRec = (number, amount) => {
 // *** НЕ РЕКУРСИЯ
 
 const amountDigit = (number) => {
-    let stringCopyNumber = new String(number);
-    let lengthNumber = stringCopyNumber.length;
-    return lengthNumber;
+    if (typeof number !== 'number') {
+        throw new Error('Wrong data type entries');
+    }
+
+   let count = 1;
+   for(;Math.ceil(number) > count;){
+    ++count;
+    number = number / 10;
+    
+   }
+   return count;
 };
 
 
@@ -66,25 +77,24 @@ String.prototype.myReverse = function(){
 
     for(let i = selfString[sym].length - 1; i >= 0; i--){
         result += selfString[sym][i];
-    };
+    }
 
     return result;
 };
 
 const checkIsPolindrome = (string) => {
     if (typeof string !== 'string') {
-        throw new Error('Wrong data type')
-    };
+        throw new Error('Wrong data type');
+    }
 
-    let lowerCaseString = string.toLowerCase();
-    let reverseString = lowerCaseString.myReverse();
-    return reverseString === lowerCaseString;
+    return string.toLowerCase().myReverse() === string.toLowerCase()
 };
 
 // 5 Написать функцию которая вычисляет подсчет уникальных слов в  // Создаю свой метод для  разбития строки на массив
 
 
 // Создаю свой метод для  разбития строки на массив
+
 String.prototype.mySplit = function(separator) {
 
     const sym = Symbol('string');
@@ -101,10 +111,9 @@ String.prototype.mySplit = function(separator) {
 
         if (separator === '') {
             result = [...selfString[sym]];
-        };
+        }
 
         if (i === separator) {
-
             let itemWithoutSeparator = '';
 
             for(let j = 0; j < item.length - 1; j++){
@@ -113,8 +122,8 @@ String.prototype.mySplit = function(separator) {
 
             result.push(itemWithoutSeparator)
             item = '';    
-        };
-    };
+        }
+    }
 
     return result;
 };
@@ -122,8 +131,8 @@ String.prototype.mySplit = function(separator) {
 
 const amountUniqWords = (sentence) => {
     if (typeof sentence !== 'string' || (sentence.length <= 1)) {
-        throw new Error('Wrong data type')
-    };
+        throw new Error('Wrong data type');
+    }
 
     const senteceWithoutSymbols = sentence.replace(/[.,!?:;]/gi, '');
     let words = senteceWithoutSymbols.mySplit(' ');
@@ -135,11 +144,11 @@ const amountUniqWords = (sentence) => {
         for (let j = 0; j <= words.length - 1; j++) {
             if (words[i] == words[j])
                 checksWords.push(words[j]);
-        };
+        }
 
         if (checksWords.length <= 1) {
             uniqWords.push(words[i]);
-        };
+        }
 
         checksWords = [];
     };
@@ -152,85 +161,106 @@ const amountUniqWords = (sentence) => {
 const amountWords = (sentence) => {
     if (typeof sentence !== 'string') {
         throw new Error('Wrong data type')
-    };
+    }
 
     const senteceWithoutSymbols = sentence.replace(/[.,!?:;]/gi, '');
     let words = senteceWithoutSymbols.mySplit(' ');
-    let amount = {};
+    let amountWords = {};
     for (let i = 0; i <= words.length - 1; i++) {
         let checksWords = [];
 
         for (let j = 0; j <= words.length - 1; j++) {
+
             if (words[i] == words[j]){
                 checksWords.push(words[j]);
-            };
-        };
+            }
 
-        amount[words[i]] = checksWords.length;
+        }
+
+        amountWords[words[i]] = checksWords.length;
         checksWords = [];
-    };
+    }
 
-    return amount;
+    return amountWords;
+};
+
+
+const checkISTriangleSides = (sideA,sideB,sideC) => {
+    if ((sideA > 0) && (sideB > 0) && (sideC > 0) &&
+            ((sideA + sideB > sideC) && (sideB + sideC > sideA) && (sideA + sideC > sideB))){
+        return true;
+    }
+
+    return false;
 };
 
 const TriangleFunc = function (sideA, sideB, sideC) {
+
+    if (!(checkISTriangleSides(sideA,sideB,sideC))){
+         throw new Error('Wrong value');
+    } 
+
     this.sideA = sideA;
     this.sideB = sideB;
     this.sideC = sideC;
+
     this.area = () => {
-        if ((this.sideA > 0) && (this.sideB > 0) && (this.sideC > 0) &&
-            ((this.sideA + this.sideB > this.sideC) && (this.sideB + this.sideC > this.sideA) && (this.sideA + this.sideC > this.sideB))) {
-            // Вычисление площади треугольника по формуле Герона
             let halfPerimetr = (this.sideA + this.sideB + this.sideC) * 0.5;
             let square = Math.floor(Math.sqrt(halfPerimetr * ((halfPerimetr - this.sideA) * (halfPerimetr - this.sideB) * (halfPerimetr - this.sideC))));
             return square;
-        }
-        throw new Error('Wrong value');
+
+       
     };
+
     this.perimeter = () => {
-        if ((this.sideA > 0) && (this.sideB > 0) && (this.sideC > 0) &&
-            ((this.sideA + this.sideB > this.sideC) && (this.sideB + this.sideC > this.sideA) && (this.sideA + this.sideC > this.sideB))) {
-            return this.sideA + this.sideB + this.sideC;
-        }
-        throw new Error('Wrong value');
+        return this.sideA + this.sideB + this.sideC;
     };
 };
 
+
+const checkIsRectangelSides = (height,width) => {
+
+    if(height !== width && (height > 0 && width > 0)){
+        return true;
+    };
+    return false;
+};
 
 const RectangleFunc = function (height, width) {
+
+    if ( !(checkIsRectangelSides(height,width)) ){
+        throw new Error('Wrong data')
+    }
+
     this.height = height;
     this.width = width;
+
     this.area = () => {
-        if (this.height !== this.width && (this.height > 0 && this.width > 0)) {
             return this.height * this.width;
-        }
-        ;
-        throw new Error('Wrong data');
     };
+
     this.perimeter = () => {
-        if (this.sideA !== this.sideB && (this.sideA > 0 && this.sideB > 0)) {
             return 2 * (this.sideA + this.sideB);
-        }
-        ;
-        throw new Error('Wrong data');
     };
 };
 
-const CircleFunc = function (radius = 0) {
+const CircleFunc = function (radius) {
+    if ( radius <= 0 ) {
+        throw new Error('Wrong data')
+    }
+
     this.radius = radius;
+
     this.area = () => {
-        if (this.radius > 0) {
-            return Math.PI * (this.radius * this.radius);
-        }
-        ;
-        throw new Error('Wrong data');
+
+        return Math.PI * (this.radius * this.radius);
+
     };
+
     this.perimeter = () => {
-        if (this.radius > 0) {
-            return 2 * (Math.PI * this.radius);
-        }
-        ;
-        throw new Error('Wrong data');
+
+        return 2 * (Math.PI * this.radius);
+    
     };
 };
 
@@ -241,83 +271,72 @@ const CircleFunc = function (radius = 0) {
 
 class Triangle {
     constructor(sideA, sideB, sideC) {
+
+        if ( !(checkISTriangleSides(sideA,sideB,sideC)) ){
+            throw new Error('Wrong data');
+        }
+
         this.sideA = sideA;
         this.sideB = sideB;
         this.sideC = sideC;
     }
+
     get perimeter() {
-        if ((this.sideA > 0) &&
-            (this.sideB > 0) &&
-            (this.sideC > 0) &&
-            ((this.sideA + this.sideB > this.sideC) &&
-                (this.sideB + this.sideC > this.sideA) &&
-                (this.sideA + this.sideC > this.sideB))) {
+    
             return this.sideA + this.sideB + this.sideC;
-        }
-        ;
         throw new Error('Wrong value');
     }
+
     get area() {
-        if ((this.sideA > 0) &&
-            (this.sideB > 0) &&
-            (this.sideC > 0) &&
-            ((this.sideA + this.sideB > this.sideC) &&
-                (this.sideB + this.sideC > this.sideA) &&
-                (this.sideA + this.sideC > this.sideB))) {
             let halfPerimetr = (this.sideA + this.sideB + this.sideC) * 0.5;
             let square = Math.floor(Math.sqrt(halfPerimetr * ((halfPerimetr - this.sideA) * (halfPerimetr - this.sideB) * (halfPerimetr - this.sideC))));
             return square;
-        };
-
-        throw new Error('Wrong value');
     }
 };
 // // ***Прямоугольника
 class Rectangle {
-    constructor(sideA, sideB) {
-        this.sideA = sideA;
-        this.sideB = sideB;
+    constructor(height, width) {
+
+        if ( !(checkIsRectangelSides(height,width)) ){
+        throw new Error('Wrong data');
+        } 
+
+        this.height = height;
+        this.width = width;
     }
+
     get perimeter() {
-        if (this.sideA !== this.sideB && (this.sideA > 0 && this.sideB > 0)) {
-            return this.sideA * this.sideB;
-        };
-
-        throw new Error('Wrong data');
+            return this.width * this.height;
     }
+
     get area() {
-        if (this.sideA !== this.sideB && (this.sideA > 0 && this.sideB > 0)) {
-            return 2 * (this.sideA * this.sideB);
-        };
-
-        throw new Error('Wrong data');
+        
+            return 2 * (this.width * this.height);
     }
-}
-;
+};
 // //
 // // // *** Круг
 // //
 
 class Circle {
     constructor(radius) {
+
+        if ( radius <= 0 ) {
+        throw new Error('Wrong data');
+        }
+
         this.radius = radius;
     }
 
     get perimeter() {
-        if (this.radius > 0) {
-            return 2 * (Math.PI * this.radius);
-        };
-        throw new Error('Wrong value');
+        return 2 * (Math.PI * this.radius);
     }
 
     get area() {
-        if (this.radius > 0) {
-            return Math.PI * (this.radius * this.radius);
-        };
-        throw new Error('Wrong value');
+        return Math.PI * (this.radius * this.radius);
     }
-}
-;
+};
+
 // 8 Вычислить факториал числа. Реализовать с помощью рекурсии. Реализовать мемоизированную функцию вычисления факториала
 // *** РЕКУРСИЯ
 
@@ -326,32 +345,44 @@ const mountFactorial = (number) => {
     if (typeof number !== 'number') {
         throw new Error('Wrong data type')
     }
+
     return (number != 1) ? number * mountFactorial(number - 1) : 1;
 };
 
 const memo = (callback) => {
+
     if (typeof callback !== 'function') {
-        throw new Error('Wrong data type')
-    };
+        throw new Error('Wrong data type');
+    }
 
     const cache = {};
-    return (n) => cache[n] || (cache[n] = callback(n));
+
+    return (n) => {
+
+        if (n in cache) { 
+            return cache[n];
+        }
+
+     return cache[n] = callback(n);
+ };
 };
 
 let memoizeFactorial = memo(mountFactorial);
 
 // *** Цыкл
+
 const factorial = (number) => {
 
     if (typeof number !== 'number') {
         throw new Error('Wrong data type')
-    };
+    }
 
     let result = 1;
+
     for (let i = 1; i <= number; i++) {
         result *= i;
     }
-    ;
+
     return result;
 };
 
@@ -363,34 +394,28 @@ const factorial = (number) => {
 
 const sumItemArray = (array, callback) => {
 
-    if (typeof value !== 'number' || value < 0) {
+    if (!(Array.isArray(array)) || typeof callback !== 'function') {
         throw new Error('Wrong data type')
-    };
+    }
+
     const mountSum = function (index, result) {
         index = index || 0;
         result = result || 0;
         let item = array[index];
+
         if (index >= array.length) {
             return result;
-        };
+        }
 
         if (callback(item)) {
             result += item;
-        };
+        }
 
-        return mountSum(index += 1, result);
+        return mountSum(index+1, result);
     };
     return mountSum(0, 0);
 };
 
-// Кратные двум
-const sumItemArrayMultipleTwo = (array) => sumItemArray(array, (item) => item % 2 === 0);
-
-// Кратные трем,
-const sumItemArrayMultipleThree = (array) => sumItemArray(array, (item) => item % 3 === 0);
-
-// которые только положительные и нечетные
-const sumItemArrayPositiveNotEven = (array) => sumItemArray(array, (item) => item > 0);
 
 // *** ЦЫКЛ
 
@@ -398,59 +423,45 @@ const sumItemArrayCycle = (array, callback) => {
 
     if (typeof value !== 'number' || value < 0) {
         throw new Error('Wrong data type')
-    };
+    }
+
     let result = 0;
+
     for (let i = 0; i <= array.length; i++) {
 
-        if (callback(array[i]) === true) {
+        if (callback(array[i])) {
             result += array[i];
-        };
+        }
     }
     return result;
 };
-
-// Кратные двум
-const sumItemArrayultipleTwoCycle = (array) => sumItemArrayCycle(array, (item) => item % 2 === 0);
-
-// Кратные трем,
-const sumItemArrayMultipleThreeCycle = (array) => sumItemArrayCycle(array, (item) => item % 3 === 0);
-
-// которые только положительные и нечетные
-const sumItemArrayPositiveNotEvenCycle = (array) => sumItemArrayCycle(array, (item) => item > 0 && item % 2 !== 0);
 
 // 10 Посчитать количество элементов массива которые (Нулевые, отрицательные, положительные, простые числа)
 const amountItemArray = (array, callback) => {
 
     if (!(Array.isArray(array)) || typeof callback !== 'function') {
         throw new Error('Wrong data type')
-    };
+    }
 
     let amount = 0;
 
     for (let index in array) {
         if (callback(array[index]))
-            amount += 1;
-    };
+            ++amount;
+    }
 
     return amount;
 };
 
-// Нулевые
-const amountItemArrayZero = (array) => amountItemArray(array, (item) => item === 0);
-
-//  Отрицательные
-const amountItemArrayNegative = (array) => amountItemArray(array, (item) => item < 0);
-
-//  Положительные
-const amountItemArrayPositive = (array) => amountItemArray(array, (item) => item > 0);
 
 //  Простые числа
 const amountItemArraySimpleNumbers = (array) => amountItemArray(array, (item) => {
 
     for (let i = 2; i < item; i++) {
-        if (item % i === 0)
+        if (item % i === 0){
             return false;
-    };
+        }
+    }
 
     return item > 1;
 });
@@ -461,15 +472,15 @@ const amountItemArraySimpleNumbers = (array) => amountItemArray(array, (item) =>
 const parseInBinary = (value) => {
 
     if (typeof value !== 'number' || value < 0) {
-        throw new Error('Wrong data type')
-    };
+        throw new Error('Wrong data type');
+    }
 
     let result = '';
 
     for (; value > 0;) {
         result += value % 2;
         value = Math.floor(value / 2);
-    };
+    }
 
     return result.myReverse();
 };
@@ -477,13 +488,15 @@ const parseInBinary = (value) => {
 const parseInDecimal = (value) => {
     if (typeof value !== 'string') {
         throw new Error('Wrong data type')
-    };
-    let copyValue = value.split('').reverse();
+    }
+
+    let copyValue = value.myReverse();
     let result = 0;
+
     for (let i = copyValue.length - 1; i >= 0; i--) {
         copyValue[i] = +copyValue[i] * (Math.pow(2, i));
         result += +copyValue[i];
-    };
+    }
 
     return result;
 };
@@ -498,7 +511,7 @@ const sumItemArrayTwoDimensional = (array, callback) => {
 
     if ((!Array.isArray(array)) || typeof callback !== 'function') {
         throw new Error('Wrong data type')
-    };
+    }
 
     const mountSum = function (index, result) {
         index = index || 0;
@@ -507,41 +520,27 @@ const sumItemArrayTwoDimensional = (array, callback) => {
 
         if (typeof item !== 'number') {
             throw new Error('Item of array has wrong type')
-        };
+        }
 
         if (index >= array.length) {
             return result;
-        };
+        }
 
         if (Array.isArray(item)) {
             return result += mountSum(item, callback);
-        };
+        }
 
         if (callback(item)) {
             result += item;
-        };
+        }
 
         return mountSum(index += 1, result);
     };
 
-    try{
-
-        return mountSum(0, 0);
-
-    }catch(e){
-        console.log(e.message);
-    }
+    return mountSum(0, 0);
     
 };
 
-
-const sumItemArrayTwoDimensionalMultipleTwo = (array) => sumItemArrayTwoDimensional(array, (item) => item % 2 === 0);
-
-// Кратные трем,
-const sumItemArrayTwoDimensionalMultipleThree = (array) => sumItemArrayTwoDimensional(array, (item) => item % 3 === 0);
-
-// которые только положительные и нечетные
-const sumItemArrayTwoDimensionalPositiveNotEven = (array) => sumItemArrayTwoDimensional(array, (item) => item > 0);
 
 // *** ЦЫКЛ
 
@@ -549,30 +548,21 @@ const sumItemArrayTwoDimensionalCycle = (array, callback) => {
 
     if ((!Array.isArray(array)) || typeof callback !== 'function') {
         throw new Error('Wrong data type')
-    };
+    }
 
     let result = 0;
     for (let i = 0; i <= array.length; i++) {
+
         if (Array.isArray(array[i])) {
             result += sumItemArrayTwoDimensionalCycle(array[i], callback);
         }
+
         if (callback(array[i]) === true) {
             result += array[i];
         }
     }
     return result;
 };
-
-// // Кратные двум
-const sumItemArrayTwoDimensionalMultipleTwoCycle = (array) => sumItemArrayTwoDimensionalCycle(array, (item) => item % 2 === 0);
-
-// Кратные трем,
-const sumItemArrayTwoDimensionalMultipleThreeCycle = (array) => sumItemArrayTwoDimensionalCycle(array, (item) => item % 3 === 0);
-
-// которые только положительные и нечетные
-const sumItemArrayTwoDimensionalositiveNotEvenCycle = (array) => sumItemArrayTwoDimensionalCycle(array, (item) => item > 0 && item % 2 !== 0);
-
-
 
 // 12-10) Посчитать количество элементов ДВУХМЕРНОГО массива которые (Нулевые, отрицательные, положительные, простые числа)
 
@@ -581,39 +571,21 @@ const amountItemArrayTwoDimensional = (array, callback) => {
 
     if ((!Array.isArray(array)) || typeof callback !== 'function') {
         throw new Error('Wrong data type')
-    };
+    }
 
     let amount = 0;
     for (let index in array) {
+
         if (Array.isArray(array[index])) {
             amountItemArrayTwoDimensional(array[index], callback);
-        };
+        }
 
-        if (callback(array[index]))
+        if (callback(array[index])){
             amount += 1;
+        }
     }
     return amount;
 };
-
-// Нулевые
-const amountItemArrayTwoDimensionalZero = (array) => amountItemArrayTwoDimensional(array, (item) => item === 0);
-
-//  Отрицательные
-const amountItemArraytTwoDimensionalNegative = (array) => amountItemArrayTwoDimensional(array, (item) => item < 0);
-
-//  Положительные
-const amountItemArrayTwoDimensionalPositive = (array) => amountItemArrayTwoDimensional(array, (item) => item > 0);
-
-//  Простые числа
-const amountItemArrayTwoDimensionalSimpleNumbers = (array) => amountItemArrayTwoDimensional(array, (item) => {
-    for (let i = 2; i < item; i++) {
-        if (item % i === 0){
-            return false;
-        };
-    };
-    return item > 1;
-});
-
 
 // 13 Посчитать сумму значений чисел от min до max (всех, только тех которые кратны 3, только положительные).
 //  Нарисовать блок схему. Реализовать также с помощью рекурсии. Реализовать мемоизированную функцию.
@@ -621,87 +593,75 @@ const amountItemArrayTwoDimensionalSimpleNumbers = (array) => amountItemArrayTwo
 
 const sumRange = (min, max, callback, result) => {
 
-     if ((typeof min !== 'number' || typeof max !== number) || max < min) {
+    if ((typeof min !== 'number' || typeof max !== number) || max < min) {
         throw new Error('Wrong data entries')
-    };
+    }
+
     min = min || 0;
     max = max || 0;
     result = result || 0;
+
     if (min >= max + 1) {
         return result;
-    };
+    }
 
     if (callback(min)) {
         result += min;
-    };
+    }
 
     return sumRange(min += 1, max, callback, result);
 };
 
 const memoize = (callback) => {
     let memory = {};
+
     return (min, max) => {
+
         if (`${min} - ${max}` in memory) {
             return memory[`${min} - ${max}`];
-        };
+        }
 
         return memory[`${min} - ${max}`] = callback(min, max);
-    };
+    }
 };
-
-// всех
-const sumRangeAll = (min, max) => sumRange(min, max, (item) => item);
-let sumRangeAllMemo = memoize(sumRangeAll);
-
-// Tолько тех которые кратны 3
-const sumRangeMultThree = (min, max) => sumRange(min, max, (item) => item % 3 === 0);
-let sumRangeMultThreeMemo = memoize(sumRangeMultThree);
-
-// только положительные
-const sumRangePositive = (min, max) => sumRange(min, max, (item) => item > 0);
-let sumRangePositiveMemo = memoize(sumRangePositive);
 
 // Цыкл
 
 const sumRangelCycle = (min, max, callback) => {
+
     if ((typeof min !== 'number' || typeof max !== number) || max < min) {
         throw new Error('Wrong data entries')
-    };
+    }
 
     let result = 0;
+
     for (; min < max + 1;) {
         if (callback(min)) {
             result += min;
             min++;
-        };
-    };
+        }
+    }
 
     return result;
 };
 
-// всех
-const sumRangeAllCycle = (min, max) => sumRangelCycle(min, max, (item) => item);
-
-// Tолько тех которые кратны 3
-const sumRangeMultThreeCycle = (min, max) => sumRangelCycle(min, max, (item) => item % 3 === 0);
-
-// только положительные
-const sumRangePositiveCycle = (min, max) => sumRangelCycle(min, max, (item) => item > 0);
 
 
 // 14 Найти среднее значение всех элементов одномерного/двумерного массива 
 // (Среднее только тех которые четные и которые не четные).
 
 const mean = (array, callback) => {
+
     if(!(Array.isArray(array)) || typeof callback !== 'function'){
         throw new Error('Wrong data entries')
-    };
+    }
 
     let sum = 0;
     let checksDigits = array.reduce((acc, item) => {
+
         if (callback(item) && typeof item == 'number') {
             acc.push(item);
-        };
+        }
 
         if (Array.isArray(item)) {
             item.forEach(digit => {
@@ -709,23 +669,17 @@ const mean = (array, callback) => {
                     acc.push(digit);
                 }
             });
-        };
+        }
 
         return acc;
     },[]);
 
     for (let digit of checksDigits) {
         sum += digit;
-    };
+    }
 
     return sum / checksDigits.length;
 };
-
-// Среднее только тех которые четные
-const meanEvent = (array) => mean(array, (item) => item % 2 === 0);
-
-// Среднее только тех которые не четные
-const meanNotEvent = (array) => mean(array, (item) => item % 2 !== 0);
 
 // 15)Транспонировать матрицу, сложить две матрицы.
 // ***Транспонирование матрицы
@@ -734,10 +688,12 @@ const transpositionMatrix = (matrix) => {
 
     if(!Array.isArray(matrix)){
         throw new Error('Wrong data entries')
-    };
+    }
+
     let result = [];
     let rowLen = matrix.length;
     let colLen = matrix[0].length;
+
     for (let i = 0; i < colLen; i++) {
         let row = [];
         for (let j = 0; j < rowLen; j++) {
@@ -745,8 +701,9 @@ const transpositionMatrix = (matrix) => {
             if (row.length == rowLen) {
                 result.push(row);
             }
-        };
-    };
+        }
+    }
+
     return result;
 };
 
@@ -755,11 +712,11 @@ const transpositionMatrix = (matrix) => {
 const sumMatrix = (matrix1, matrix2) => {
     if (!(Array.isArray(matrix1)) || !(Array.isArray(matrix2))) {
         throw new Error('Wrong data entries')
-    };
+    }
 
     if (matrix1.length === 0 || matrix2.length === 0 || (matrix1.length === 0 && matrix2.length === 0)) {
         throw Error('Wrong arguments');
-    };
+    }
 
     let result = [];
     let rowLen = matrix1.length;
@@ -768,11 +725,11 @@ const sumMatrix = (matrix1, matrix2) => {
         result[i] = [];
         if (!(Array.isArray(matrix1[i])) && !(Array.isArray(matrix2[i]))) {
             result[i].push(+matrix1[i] + +matrix2[i]);
-        };
+        }
 
         for (let j = 0; j < col; j++) {
             result[i].push((matrix1[i][j] + matrix2[i][j]));
-        };
+        }
     };
     return result;
 };
@@ -782,19 +739,23 @@ const removeColumnWithZero = (matrix) => {
 
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries')
-    };
+    }
 
     let clone = matrix.map(arr => arr.slice());
     let res = [];
     for (let i in clone) {
+
         if (clone[i].some((item) => item == 0)) {
+
             let pos = clone[+i].indexOf(0);
+
             for (let j in clone) {
                 clone[j].splice(pos, 1);
                 res[j] != clone[j] ? res.push(clone[j]) : null;
-            };
-        };
-    };
+            }
+
+        }
+    }
     return res[0].length !== matrix[0].length ? res : matrix;
 };
 
@@ -803,15 +764,16 @@ const removeColumnWithZero = (matrix) => {
 const removeRowZero = (matrix) => {
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries')
-    };
+    }
 
     let result = [];
     for (let row of matrix) {
 
         if (row.includes(0) === false) {
             result.push(row);
-        };
-    };
+        }
+    }
+
     return result;
 };
 
@@ -820,9 +782,10 @@ const removeRowZero = (matrix) => {
 // Посчитать сумму  над и под главной диагональю и на главной диагональю
 
 const sumFromMatrix = (matrix) => {
+
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries')
-    };
+    }
 
     let result = {
         'sum-above-diagonal': 0,
@@ -831,22 +794,28 @@ const sumFromMatrix = (matrix) => {
     };
 
     let copyMatrixAbove = matrix.map(item => item.slice());
-    let copyMatrixUnder = matrix.map(item => item.slice()).reverse();
+    let copyMatrixReverse = matrix.map(item => item.slice()).reverse();
+
     let numbersAbove = [];
     let numbersUnder = [];
 
     for (let i = 0; i <= matrix.length - 1; i++) {
-        result["sum-diagonal"] += matrix[i][i];
+
+        let numberDiagonal = matrix[i][i]
+        result["sum-diagonal"] += numberDiagonal;
+
         let valueAbove = copyMatrixAbove[i].slice(i + 1);
         numbersAbove.push(...valueAbove);
-        let valueUnder = copyMatrixUnder[i].reverse().slice(i + 1);
+
+        let valueUnder = copyMatrixReverse[i].reverse().slice(i + 1);
         numbersUnder.push(...valueUnder);
-    };
+    }
 
     for (let k = 0; k <= numbersAbove.length - 1; k++) {
+
         result["sum-above-diagonal"] += +numbersAbove[k];
         result["sum-under-diagonal"] += +numbersUnder[k];
-    };
+    }
 
     return result;
 };
@@ -857,7 +826,7 @@ const amountZeroMatrix = (matrix) => {
 
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries')
-    };
+    }
 
     const result = {
         'zeros-above-diagonal': 0,
@@ -866,17 +835,21 @@ const amountZeroMatrix = (matrix) => {
     };
 
     let copyMatrixAbove = matrix.map(item => item.slice());
-    let copyMatrixUnder = matrix.map(item => item.slice()).reverse();
+    let copyMatrixReverse = matrix.map(item => item.slice()).reverse();
 
     let numbersAbove = [];
     let numbersUnder = [];
 
     for (let i = 0; i <= matrix.length - 1; i++) {
-        if (matrix[i][i] === 0)
+
+        if (matrix[i][i] === 0){
             result['zeros-diagonal'] += 1;
+        }
+
         let valueAbove = copyMatrixAbove[i].slice(i + 1);
         numbersAbove.push(...valueAbove);
-        let valueUnder = copyMatrixUnder[i].reverse().slice(i + 1);
+
+        let valueUnder = copyMatrixReverse[i].reverse().slice(i + 1);
         numbersUnder.push(...valueUnder);
     };
 
@@ -907,21 +880,29 @@ const meanMatrix = (matrix) => {
     };
 
     let copyMatrixAbove = matrix.map(item => item.slice());
-    let copyMatrixUnder = matrix.map(item => item.slice()).reverse();
     let numbersAbove = [];
+
+    let copyMatrixReverse = matrix.map(item => item.slice()).reverse();
     let numbersUnder = [];
+
+
     for (let i = 0; i <= matrix.length - 1; i++) {
-        result["mean-diagonal"] += matrix[i][i];
+
+        let numberDiagonal = matrix[i][i]
+        result["mean-diagonal"] += numberDiagonal;
+
         let valueAbove = copyMatrixAbove[i].slice(i + 1);
         numbersAbove.push(...valueAbove);
-        let valueUnder = copyMatrixUnder[i].reverse().slice(i + 1);
+
+
+        let valueUnder = copyMatrixReverse[i].reverse().slice(i + 1);
         numbersUnder.push(...valueUnder);
-    };
+    }
 
     for (let k = 0; k <= numbersAbove.length - 1; k++) {
         result["mean-above-diagonal"] += +numbersAbove[k];
         result["mean-under-diagonal"] += +numbersUnder[k];
-    };
+    }
 
     result["mean-diagonal"] = +((result["mean-above-diagonal"] / matrix.length).toFixed(2));
     result["mean-above-diagonal"] = +((result["mean-above-diagonal"] / numbersAbove.length).toFixed(2));
@@ -1077,7 +1058,7 @@ const amountBitOne = (number) => {
 
     for(;number;) {
         result++;
-        number = number & number -1;
+        number &= number -1;
     };
 
     return result;
