@@ -101,7 +101,7 @@ String.prototype.mySplit = function(separator) {
 
         if (separator === '') {
             result = [...selfString[sym]];
-        }
+        };
 
         if (i === separator) {
 
@@ -159,15 +159,17 @@ const amountWords = (sentence) => {
     let amount = {};
     for (let i = 0; i <= words.length - 1; i++) {
         let checksWords = [];
+
         for (let j = 0; j <= words.length - 1; j++) {
-            if (words[i] == words[j])
+            if (words[i] == words[j]){
                 checksWords.push(words[j]);
-        }
-        ;
+            };
+        };
+
         amount[words[i]] = checksWords.length;
         checksWords = [];
-    }
-    ;
+    };
+
     return amount;
 };
 
@@ -279,15 +281,15 @@ class Rectangle {
     get perimeter() {
         if (this.sideA !== this.sideB && (this.sideA > 0 && this.sideB > 0)) {
             return this.sideA * this.sideB;
-        }
-        ;
+        };
+
         throw new Error('Wrong data');
     }
     get area() {
         if (this.sideA !== this.sideB && (this.sideA > 0 && this.sideB > 0)) {
             return 2 * (this.sideA * this.sideB);
-        }
-        ;
+        };
+
         throw new Error('Wrong data');
     }
 }
@@ -300,18 +302,18 @@ class Circle {
     constructor(radius) {
         this.radius = radius;
     }
+
     get perimeter() {
         if (this.radius > 0) {
             return 2 * (Math.PI * this.radius);
-        }
-        ;
+        };
         throw new Error('Wrong value');
     }
+
     get area() {
         if (this.radius > 0) {
             return Math.PI * (this.radius * this.radius);
-        }
-        ;
+        };
         throw new Error('Wrong value');
     }
 }
@@ -370,12 +372,12 @@ const sumItemArray = (array, callback) => {
         let item = array[index];
         if (index >= array.length) {
             return result;
-        }
-        ;
+        };
+
         if (callback(item)) {
             result += item;
-        }
-        ;
+        };
+
         return mountSum(index += 1, result);
     };
     return mountSum(0, 0);
@@ -399,9 +401,10 @@ const sumItemArrayCycle = (array, callback) => {
     };
     let result = 0;
     for (let i = 0; i <= array.length; i++) {
+
         if (callback(array[i]) === true) {
             result += array[i];
-        }
+        };
     }
     return result;
 };
@@ -423,11 +426,12 @@ const amountItemArray = (array, callback) => {
     };
 
     let amount = 0;
+
     for (let index in array) {
         if (callback(array[index]))
             amount += 1;
-    }
-    ;
+    };
+
     return amount;
 };
 
@@ -442,11 +446,12 @@ const amountItemArrayPositive = (array) => amountItemArray(array, (item) => item
 
 //  Простые числа
 const amountItemArraySimpleNumbers = (array) => amountItemArray(array, (item) => {
+
     for (let i = 2; i < item; i++) {
         if (item % i === 0)
             return false;
-    }
-    ;
+    };
+
     return item > 1;
 });
 
@@ -472,14 +477,14 @@ const parseInBinary = (value) => {
 const parseInDecimal = (value) => {
     if (typeof value !== 'string') {
         throw new Error('Wrong data type')
-    }
+    };
     let copyValue = value.split('').reverse();
     let result = 0;
     for (let i = copyValue.length - 1; i >= 0; i--) {
         copyValue[i] = +copyValue[i] * (Math.pow(2, i));
         result += +copyValue[i];
-    }
-    ;
+    };
+
     return result;
 };
 
@@ -541,9 +546,11 @@ const sumItemArrayTwoDimensionalPositiveNotEven = (array) => sumItemArrayTwoDime
 // *** ЦЫКЛ
 
 const sumItemArrayTwoDimensionalCycle = (array, callback) => {
+
     if ((!Array.isArray(array)) || typeof callback !== 'function') {
         throw new Error('Wrong data type')
     };
+
     let result = 0;
     for (let i = 0; i <= array.length; i++) {
         if (Array.isArray(array[i])) {
@@ -580,8 +587,8 @@ const amountItemArrayTwoDimensional = (array, callback) => {
     for (let index in array) {
         if (Array.isArray(array[index])) {
             amountItemArrayTwoDimensional(array[index], callback);
-        }
-        ;
+        };
+
         if (callback(array[index]))
             amount += 1;
     }
@@ -600,9 +607,10 @@ const amountItemArrayTwoDimensionalPositive = (array) => amountItemArrayTwoDimen
 //  Простые числа
 const amountItemArrayTwoDimensionalSimpleNumbers = (array) => amountItemArrayTwoDimensional(array, (item) => {
     for (let i = 2; i < item; i++) {
-        if (item % i === 0)
+        if (item % i === 0){
             return false;
-    }
+        };
+    };
     return item > 1;
 });
 
@@ -621,12 +629,12 @@ const sumRange = (min, max, callback, result) => {
     result = result || 0;
     if (min >= max + 1) {
         return result;
-    }
-    ;
+    };
+
     if (callback(min)) {
         result += min;
-    }
-    ;
+    };
+
     return sumRange(min += 1, max, callback, result);
 };
 
@@ -635,8 +643,8 @@ const memoize = (callback) => {
     return (min, max) => {
         if (`${min} - ${max}` in memory) {
             return memory[`${min} - ${max}`];
-        }
-        ;
+        };
+
         return memory[`${min} - ${max}`] = callback(min, max);
     };
 };
@@ -737,10 +745,8 @@ const transpositionMatrix = (matrix) => {
             if (row.length == rowLen) {
                 result.push(row);
             }
-        }
-        ;
-    }
-    ;
+        };
+    };
     return result;
 };
 
@@ -750,10 +756,11 @@ const sumMatrix = (matrix1, matrix2) => {
     if (!(Array.isArray(matrix1)) || !(Array.isArray(matrix2))) {
         throw new Error('Wrong data entries')
     };
+
     if (matrix1.length === 0 || matrix2.length === 0 || (matrix1.length === 0 && matrix2.length === 0)) {
         throw Error('Wrong arguments');
-    }
-    ;
+    };
+
     let result = [];
     let rowLen = matrix1.length;
     let col = matrix1[0].length;
@@ -761,11 +768,12 @@ const sumMatrix = (matrix1, matrix2) => {
         result[i] = [];
         if (!(Array.isArray(matrix1[i])) && !(Array.isArray(matrix2[i]))) {
             result[i].push(+matrix1[i] + +matrix2[i]);
-        }
+        };
+
         for (let j = 0; j < col; j++) {
             result[i].push((matrix1[i][j] + matrix2[i][j]));
-        }
-    }
+        };
+    };
     return result;
 };
 //  16)Удалить из матрицы тот столбец который имеет хотя бы один нулевой элемент.
@@ -833,13 +841,13 @@ const sumFromMatrix = (matrix) => {
         numbersAbove.push(...valueAbove);
         let valueUnder = copyMatrixUnder[i].reverse().slice(i + 1);
         numbersUnder.push(...valueUnder);
-    }
-    ;
+    };
+
     for (let k = 0; k <= numbersAbove.length - 1; k++) {
         result["sum-above-diagonal"] += +numbersAbove[k];
         result["sum-under-diagonal"] += +numbersUnder[k];
-    }
-    ;
+    };
+
     return result;
 };
 
@@ -850,15 +858,19 @@ const amountZeroMatrix = (matrix) => {
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries')
     };
+
     const result = {
         'zeros-above-diagonal': 0,
         'zeros-under-diagonal': 0,
         'zeros-diagonal': 0,
     };
+
     let copyMatrixAbove = matrix.map(item => item.slice());
     let copyMatrixUnder = matrix.map(item => item.slice()).reverse();
+
     let numbersAbove = [];
     let numbersUnder = [];
+
     for (let i = 0; i <= matrix.length - 1; i++) {
         if (matrix[i][i] === 0)
             result['zeros-diagonal'] += 1;
@@ -866,21 +878,21 @@ const amountZeroMatrix = (matrix) => {
         numbersAbove.push(...valueAbove);
         let valueUnder = copyMatrixUnder[i].reverse().slice(i + 1);
         numbersUnder.push(...valueUnder);
-    }
-    ;
+    };
+
     for (let k = 0; k <= numbersAbove.length - 1; k++) {
         if (+numbersAbove[k] === 0) {
             result["zeros-above-diagonal"] += 1;
-        }
-        ;
+        };
+
         if (+numbersUnder[k] === 0) {
             result["zeros-under-diagonal"] += 1;
-        }
-        ;
-    }
-    ;
+        };
+    };
+
     return result;
 };
+
 // Посчитать среднее значение элементов матрицы над и под главной диагональю и на главной диагональю.
 const meanMatrix = (matrix) => {
 
@@ -1024,7 +1036,8 @@ const checkIsNegative = (number) => {
 
     if (typeof number !== 'number') {
         throw new Error('Wrong data type entries');
-    }
+    };
+
     return !!(number >> number);
 };
  
@@ -1059,12 +1072,14 @@ const amountBitOne = (number) => {
     if (typeof number !== 'number' || number < 0) {
         throw new Error('Wrong data type entrie')
     };
+
     let result = 0;
 
     for(;number;) {
         result++;
         number = number & number -1;
     };
+
     return result;
   };
 
@@ -1079,11 +1094,12 @@ const amountBitZero = (number) => {
     let bit = 1;
     let bitInOne = amountBitOne(number);
     let result = 0;
+
     for(let i = 0; i <= number; i++){
         result++;
         bit <<= 1;
         if (bit >= number) {
             return (result - bitInOne);
         }
-    }
+    };
 };
