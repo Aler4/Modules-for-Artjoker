@@ -173,7 +173,9 @@ const amountWords = (sentence) => {
     }
 
     const senteceWithoutSymbols = sentence.replace(/[.,!?:;]/gi, '');
+
     let words = senteceWithoutSymbols.mySplit(' ');
+
     let amountWords = {};
 
     for (let i = 0; i <= words.length - 1; i++) {
@@ -196,7 +198,8 @@ const amountWords = (sentence) => {
 
 
 const checkIStriangleSides = (sideA,sideB,sideC) => {
-    let isCorrect = false 
+    let isCorrect = false;
+
     if ((sideA > 0) && (sideB > 0) && (sideC > 0) &&
             ((sideA + sideB > sideC) && (sideB + sideC > sideA) && (sideA + sideC > sideB))){
         isCorrect = true;
@@ -227,7 +230,7 @@ const TriangleFunc = function (sideA, sideB, sideC) {
 };
 
 
-const checkIsRectangelSides = (height,width) => {
+const checkIsRectangelSides = (height, width) => {
     let isCorrect = false;
 
     if(height !== width && (height > 0 && width > 0)){
@@ -256,6 +259,7 @@ const RectangleFunc = function (height, width) {
 };
 
 const CircleFunc = function (radius) {
+
     if ( radius <= 0 ) {
         throw new Error('Wrong data')
     }
@@ -452,7 +456,7 @@ const sumItemArrayCycle = (array, callback) => {
 const amountItemArray = (array, callback) => {
 
     if (!(Array.isArray(array)) || typeof callback !== 'function') {
-        throw new Error('Wrong data type')
+        throw new Error('Wrong data type');
     }
 
     let amount = 0;
@@ -489,7 +493,7 @@ const parseInBinary = (value) => {
 const parseInDecimal = (value) => {
 
     if (typeof value !== 'string') {
-        throw new Error('Wrong data type')
+        throw new Error('Wrong data type');
     }
 
     let copyValue = value.myReverse();
@@ -512,7 +516,7 @@ const parseInDecimal = (value) => {
 const sumItemArrayTwoDimensional = (array, callback,index,result) => {
 
     if ((!Array.isArray(array)) || typeof callback !== 'function') {
-        throw new Error('Wrong data type')
+        throw new Error('Wrong data type');
     }
 
     index = index || 0;
@@ -520,7 +524,7 @@ const sumItemArrayTwoDimensional = (array, callback,index,result) => {
     let item = array[index];
     
     if (typeof item !== 'number') {
-            throw new Error('Item of array has wrong type')
+            throw new Error('Item of array has wrong type');
     }
 
     if (index >= array.length) {
@@ -546,7 +550,7 @@ const sumItemArrayTwoDimensional = (array, callback,index,result) => {
 const sumItemArrayTwoDimensionalCycle = (array, callback) => {
 
     if ((!Array.isArray(array)) || typeof callback !== 'function') {
-        throw new Error('Wrong data type')
+        throw new Error('Wrong data type');
     }
 
     let result = 0;
@@ -569,7 +573,7 @@ const sumItemArrayTwoDimensionalCycle = (array, callback) => {
 const amountItemArrayTwoDimensional = (array, callback) => {
 
     if ((!Array.isArray(array)) || typeof callback !== 'function') {
-        throw new Error('Wrong data type')
+        throw new Error('Wrong data type');
     }
 
     let amount = 0;
@@ -593,7 +597,7 @@ const amountItemArrayTwoDimensional = (array, callback) => {
 const sumRange = (min, max, callback, result) => {
 
     if ((typeof min !== 'number' || typeof max !== number) || max < min) {
-        throw new Error('Wrong data entries')
+        throw new Error('Wrong data entries');
     }
 
     min = min || 0;
@@ -651,7 +655,7 @@ const sumRangelCycle = (min, max, callback) => {
 const mean = (array, callback) => {
 
     if(!(Array.isArray(array)) || typeof callback !== 'function'){
-        throw new Error('Wrong data entries')
+        throw new Error('Wrong data entries');
     }
 
     let sum = 0;
@@ -718,7 +722,7 @@ const transpositionMatrix = (matrix) => {
 const sumMatrixs = (matrix1, matrix2) => {
 
     if ( !(Array.isArray(matrix1)) || !(Array.isArray(matrix2)) ) {
-        throw new Error('Wrong data entries')
+        throw new Error('Wrong data entries');
     }
 
     let result = [];
@@ -750,7 +754,7 @@ const sumMatrixs = (matrix1, matrix2) => {
 const removeColumnWithZero = (matrix) => {
 
     if (!Array.isArray(matrix)) {
-        throw new Error('Wrong data entries')
+        throw new Error('Wrong data entries');
     }
 
     let clone = matrix.map(arr => arr.slice());
@@ -1055,7 +1059,7 @@ const checkIsNegative = (number) => {
  const convertBit = (number) => { 
 
     if (typeof number !== 'number') {
-    throw new Error('Wrong data entries')
+    throw new Error('Wrong data entries');
     }
 
     return number ^ -1;
@@ -1066,7 +1070,7 @@ const checkIsNegative = (number) => {
 const convert = (number) => {
 
     if (typeof number !== 'number') {
-        throw new Error('Wrong data type entries')
+        throw new Error('Wrong data type entries');
     }
 
     if (checkIsNegative(number)) {
@@ -1080,7 +1084,7 @@ const convert = (number) => {
 
 const amountBitOne = (number) => {
     if (typeof number !== 'number' || number < 0) {
-        throw new Error('Wrong data type entrie')
+        throw new Error('Wrong data type entrie');
     }
 
     let result = 0;
@@ -1098,7 +1102,7 @@ const amountBitOne = (number) => {
 const amountBitZero = (number) => {
 
     if (typeof number !== 'number' || number < 0) {
-        throw new Error('Wrong data type entries')
+        throw new Error('Wrong data type entries');
     }
 
     let bit = 1;
