@@ -74,8 +74,8 @@ String.prototype.myReverse = function(){
 
     const sym = Symbol('string');
     let selfString = {
-        [sym] : this
-    }
+        [sym] : this,
+    };
 
     let result = '';
 
@@ -91,7 +91,7 @@ const checkIsPolindrome = (string) => {
         throw new Error('Wrong data type');
     }
 
-    return string.toLowerCase().myReverse() === string.toLowerCase()
+    return string.toLowerCase().myReverse() === string.toLowerCase();
 };
 
 // 5 Написать функцию которая вычисляет подсчет уникальных слов в  // Создаю свой метод для  разбития строки на массив
@@ -200,8 +200,9 @@ const amountWords = (sentence) => {
 const checkIStriangleSides = (sideA,sideB,sideC) => {
     let isCorrect = false;
 
-    if ((sideA > 0) && (sideB > 0) && (sideC > 0) &&
-            ((sideA + sideB > sideC) && (sideB + sideC > sideA) && (sideA + sideC > sideB))){
+    if ((sideA > 0) && (sideB > 0)
+    && (sideC > 0) && ((sideA + sideB > sideC)
+    && (sideB + sideC > sideA) && (sideA + sideC > sideB))){
         isCorrect = true;
     }
 
@@ -243,7 +244,7 @@ const checkIsRectangelSides = (height, width) => {
 const RectangleFunc = function (height, width) {
 
     if ( !(checkIsRectangelSides(height,width)) ){
-        throw new Error('Wrong data')
+        throw new Error('Wrong data');
     }
 
     this.height = height;
@@ -261,7 +262,7 @@ const RectangleFunc = function (height, width) {
 const CircleFunc = function (radius) {
 
     if ( radius <= 0 ) {
-        throw new Error('Wrong data')
+        throw new Error('Wrong data');
     }
 
     this.radius = radius;
@@ -285,6 +286,7 @@ const CircleFunc = function (radius) {
 // //
 
 class Triangle {
+
     constructor(sideA, sideB, sideC) {
 
         if ( !(checkISTriangleSides(sideA,sideB,sideC)) ){
@@ -311,6 +313,7 @@ class Triangle {
 
 // // ***Прямоугольника
 class Rectangle {
+
     constructor(height, width) {
 
         if ( !(checkIsRectangelSides(height,width) ) ){
@@ -335,6 +338,7 @@ class Rectangle {
 // //
 
 class Circle {
+
     constructor(radius) {
 
         if ( radius <= 0 ) {
@@ -359,7 +363,7 @@ class Circle {
 const mountFactorial = (number) => {
 
     if (typeof number !== 'number') {
-        throw new Error('Wrong data type')
+        throw new Error('Wrong data type');
     }
 
     return (number != 1) ? number * mountFactorial(number - 1) : 1;
@@ -390,7 +394,7 @@ let memoizeFactorial = memo(mountFactorial);
 const factorial = (number) => {
 
     if (typeof number !== 'number') {
-        throw new Error('Wrong data type')
+        throw new Error('Wrong data type');
     }
 
     let result = 1;
@@ -408,28 +412,25 @@ const factorial = (number) => {
 
 // ***РЕКУРСИЯ
 
-const sumItemArray = (array, callback) => {
+const sumItemArray = (array, callback,index, result) => {
 
     if (!(Array.isArray(array)) || typeof callback !== 'function') {
-        throw new Error('Wrong data type')
+        throw new Error('Wrong data type');
     }
 
-    const mountSum = function (index, result) {
-        index = index || 0;
-        result = result || 0;
-        let item = array[index];
+    index = index || 0;
+    result = result || 0;
+    let item = array[index];
 
-        if (index >= array.length) {
-            return result;
-        }
+    if (index >= array.length) {
+        return result;
+    }
 
-        if (callback(item)) {
-            result += item;
-        }
+    if (callback(item)) {
+        result += item;
+    }
 
-        return mountSum(index++, result);
-    };
-    return mountSum(0, 0);
+    return sumItemArray(array, callback,index++,result);
 };
 
 
@@ -438,7 +439,7 @@ const sumItemArray = (array, callback) => {
 const sumItemArrayCycle = (array, callback) => {
 
     if (typeof value !== 'number' || value < 0) {
-        throw new Error('Wrong data type')
+        throw new Error('Wrong data type');
     }
 
     let result = 0;
@@ -633,7 +634,7 @@ const memoize = (callback) => {
 const sumRangelCycle = (min, max, callback) => {
 
     if ((typeof min !== 'number' || typeof max !== number) || max < min) {
-        throw new Error('Wrong data entries')
+        throw new Error('Wrong data entries');
     }
 
     let result = 0;
@@ -659,10 +660,11 @@ const mean = (array, callback) => {
     }
 
     let sum = 0;
+
     let checksDigits = array.reduce((acc, item) => {
 
         if (callback(item) && typeof item == 'number') {
-            acc.push(item)
+            acc.push(item);
         }
 
         if (Array.isArray(item)) {
@@ -671,10 +673,11 @@ const mean = (array, callback) => {
                 if (callback(digit)) {
                     acc.push(digit)
                 }
-            })
+            });
         }
 
         return acc;
+
     },[]);
 
     for (let digit of checksDigits) {
@@ -690,7 +693,7 @@ const mean = (array, callback) => {
 const transpositionMatrix = (matrix) => {
 
     if(!Array.isArray(matrix)){
-        throw new Error('Wrong data entries')
+        throw new Error('Wrong data entries');
     }
 
     let result = matrix;
@@ -748,6 +751,7 @@ const sumMatrixs = (matrix1, matrix2) => {
 
     return result;
 };
+
 //  16)Удалить из матрицы тот столбец который имеет хотя бы один нулевой элемент.
 
 
@@ -780,7 +784,7 @@ const removeColumnWithZero = (matrix) => {
 const removeRowZero = (matrix) => {
 
     if (!Array.isArray(matrix)) {
-        throw new Error('Wrong data entries')
+        throw new Error('Wrong data entries');
     }
 
     let result = [];
@@ -802,7 +806,7 @@ const removeRowZero = (matrix) => {
 const sumFromMatrix = (matrix) => {
 
     if (!Array.isArray(matrix)) {
-        throw new Error('Wrong data entries')
+        throw new Error('Wrong data entries');
     }
 
     let results = {
