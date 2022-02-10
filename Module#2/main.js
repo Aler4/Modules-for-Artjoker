@@ -35,7 +35,7 @@ Array.prototype.myMap = function (callback) {
 // @ts-ignore
 Array.prototype.myReducer = function (callback, initial) {
     let selfArr = this;
-    initial = initial || selfArr[0];
+    typeof selfArr[0] === 'string' ? initial = initial || '' : initial = initial || 0;
     let result = initial;
     for (let i = 0; i <= selfArr.length - 1; i++) {
         result += callback(result, selfArr[i], i, selfArr);
@@ -66,7 +66,6 @@ Array.prototype.myForEach = function (callback) {
 //find
 // @ts-ignore 
 Array.prototype.myFind = function (callback) {
-    const symbol = Symbol('arr');
     let selfArr = this;
     let result;
     for (let i = 0; i <= selfArr.length; i++) {
