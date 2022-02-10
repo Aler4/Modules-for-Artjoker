@@ -24,40 +24,33 @@ Function.prototype.myCall = function (contexts) {
 // map
 // @ts-ignore
 Array.prototype.myMap = function (callback) {
-    const symbol = Symbol('arr');
-    let selfArr = {
-        [symbol]: this,
-    };
+    let selfArr = this;
     let result = [];
-    for (let i = 0; i <= selfArr[symbol].length - 1; i++) {
-        result.push(callback(selfArr[symbol][i], i, selfArr[symbol]));
+    for (let i = 0; i <= selfArr.length - 1; i++) {
+        result.push(callback(selfArr[i], i, selfArr));
     }
     return result;
 };
 // reduce
 // @ts-ignore
 Array.prototype.myReducer = function (callback, initial) {
-    const symbol = Symbol('arr');
-    let selfArr = {
-        [symbol]: this
-    };
-    initial = initial || this[0];
+    let selfArr = this;
+    initial = initial || selfArr[0];
     let result = initial;
-    for (let i = 0; i <= selfArr[symbol].length; i++) {
-        result = callback[selfArr[symbol][i], result];
+    for (let i = 0; i <= selfArr.length - 1; i++) {
+        result += callback(result, selfArr[i], i, selfArr);
     }
+    return result;
 };
 // filter
 // @ts-ignore
 Array.prototype.myFilter = function (callback) {
     const symbol = Symbol('arr');
-    let selfArr = {
-        [symbol]: this,
-    };
+    let selfArr = this;
     let result = [];
-    for (let i = 0; i < selfArr[symbol].length; i++) {
-        if (callback(selfArr[symbol][i], i, selfArr[symbol])) {
-            result.push(selfArr[symbol][i]);
+    for (let i = 0; i < selfArr.length; i++) {
+        if (callback(selfArr[i], i, selfArr)) {
+            result.push(selfArr[i]);
         }
     }
     return result;
@@ -65,11 +58,23 @@ Array.prototype.myFilter = function (callback) {
 // forEach
 // @ts-ignore
 Array.prototype.myForEach = function (callback) {
-    const symbol = Symbol('arr');
-    let selfArr = {
-        [symbol]: this,
-    };
-    for (let i = 0; i < selfArr[symbol].length; i++) {
-        callback(selfArr[symbol][i], i, selfArr[symbol]);
+    let selfArr = this;
+    for (let i = 0; i < selfArr.length; i++) {
+        callback(selfArr[i], i, selfArr);
     }
+};
+//find
+// @ts-ignore 
+Array.prototype.myFind = function (callback) {
+    const symbol = Symbol('arr');
+    let selfArr = this;
+    let result;
+    for (let i = 0; i <= selfArr.length; i++) {
+        let item = selfArr[i];
+        if (callback(item, i, selfArr)) {
+            result = item;
+            break;
+        }
+    }
+    return result;
 };

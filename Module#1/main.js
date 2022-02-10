@@ -203,7 +203,7 @@ const checkIStriangleSides = (sideA,sideB,sideC) => {
     }
 
     return isCorrect;
-}
+};
 
 const TriangleFunc = function (sideA, sideB, sideC) {
 
@@ -458,8 +458,9 @@ const amountItemArray = (array, callback) => {
     let amount = 0;
 
     for (let index in array) {
-        if (callback(array[index]))
+        if (callback(array[index])){
             ++amount;
+        }
     }
 
     return amount;
@@ -486,6 +487,7 @@ const parseInBinary = (value) => {
 };
 
 const parseInDecimal = (value) => {
+
     if (typeof value !== 'string') {
         throw new Error('Wrong data type')
     }
@@ -632,7 +634,7 @@ const sumRangelCycle = (min, max, callback) => {
 
     let result = 0;
 
-     while(min < max + 1) {
+    while(min < max + 1) {
         if (callback(min)) {
             result += min;
             min++;
@@ -712,14 +714,15 @@ const transpositionMatrix = (matrix) => {
 };
 
 // сложить две матрицы
+
 const sumMatrixs = (matrix1, matrix2) => {
 
     if ( !(Array.isArray(matrix1)) || !(Array.isArray(matrix2)) ) {
         throw new Error('Wrong data entries')
     }
 
-
     let result = [];
+
     if( (matrix1.length > 0 && matrix2.length > 0) && (matrix1.length === matrix2.length)) {
 
         let rowLen = matrix1.length;
@@ -738,10 +741,11 @@ const sumMatrixs = (matrix1, matrix2) => {
             }
         }
     }
-    
+
     return result;
 };
 //  16)Удалить из матрицы тот столбец который имеет хотя бы один нулевой элемент.
+
 
 const removeColumnWithZero = (matrix) => {
 
@@ -789,6 +793,7 @@ const removeRowZero = (matrix) => {
 //  17 Посчитать сумму/количество нулевых элементов/среднее значение
 // элементов матрицы над и под главной диагональю и на главной диагональю.
 // Посчитать сумму  над и под главной диагональю и на главной диагональю
+
 
 const sumFromMatrix = (matrix) => {
 
@@ -877,6 +882,7 @@ const amountZeroMatrix = (matrix) => {
 };
 
 // Посчитать среднее значение элементов матрицы над и под главной диагональю и на главной диагональю.
+
 const meanMatrix = (matrix) => {
 
     if (!Array.isArray(matrix)) {
@@ -968,7 +974,7 @@ const amountFibonacci = (value) => {
 
 const memooize = (callback) => {
 
-    if (typeof fn !== 'function') {
+    if (typeof callback !== 'function') {
         throw new Error('Wrong data type entries');
     }
 
