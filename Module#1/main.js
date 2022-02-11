@@ -15,9 +15,9 @@ const checkIsAnagram = (firstString, secondString) => {
     let copySecondString = secondString.toLowerCase();
     let copyFirstString = firstString.toLowerCase();
 
-    for(let i = 0; i <= copyFirstString.length;i++){
+    for(let i = 0; i < copyFirstString.length -1;i++){
 
-        for(let j = 0; j <= copySecondString.length;j++){
+        for(let j = 0; j < copySecondString.length;j++){
 
             if (copyFirstString[i] === copySecondString[j]) {
                 copySecondString = copySecondString.replace(copyFirstString[i],'');
@@ -72,15 +72,11 @@ const amountDigit = (number) => {
 
 String.prototype.myReverse = function(){
 
-    const sym = Symbol('string');
-    let selfString = {
-        [sym] : this,
-    };
 
     let result = '';
 
-    for(let i = selfString[sym].length - 1; i >= 0; i--){
-        result += selfString[sym][i];
+    for(let i = this.length - 1; i >= 0; i--){
+        result += this[i];
     }
 
     return result;
@@ -100,21 +96,14 @@ const checkIsPolindrome = (string) => {
 // Создаю свой метод для  разбития строки на массив
 
 String.prototype.mySplit = function(separator) {
-
-    const sym = Symbol('string');
-
-    let selfString = {
-        [sym]: this,
-    };
-
-    let result = [];
+    let selfString = this;
     let item = '';
 
-    for(let i of selfString[sym]){
+    for(let i of selfString){
         item += i;
 
         if (separator === '') {
-            result = [...selfString[sym]];
+            result = [...selfString];
         }
 
         if (i === separator) {
@@ -360,14 +349,28 @@ class Circle {
 // 8 Вычислить факториал числа. Реализовать с помощью рекурсии. Реализовать мемоизированную функцию вычисления факториала
 // *** РЕКУРСИЯ
 
-const mountFactorial = (number) => {
+const memoizeFactora = ((number) => {
 
     if (typeof number !== 'number') {
         throw new Error('Wrong data type');
     }
 
-    return (number != 1) ? number * mountFactorial(number - 1) : 1;
-};
+    let memory = {};
+
+    const factorial = () => {
+
+        let value = null;
+        if (number in memory ) {
+            value = memory[number];
+        }
+        value =  number * factorial(number -1);
+        memory[number] = value;
+
+        return value;
+    }
+
+    return factorial(number)
+});
 
 const memo = (callback) => {
 
@@ -653,37 +656,30 @@ const sumRangelCycle = (min, max, callback) => {
 // 14 Найти среднее значение всех элементов одномерного/двумерного массива 
 // (Среднее только тех которые четные и которые не четные).
 
-const mean = (array, callback) => {
+const averageValue = (array, callback) => {
 
     if(!(Array.isArray(array)) || typeof callback !== 'function'){
         throw new Error('Wrong data entries');
     }
 
     let sum = 0;
+    let checksDigits = [];
 
-    let checksDigits = array.reduce((acc, item) => {
+    for(let item of array){
 
         if (callback(item) && typeof item == 'number') {
-            acc.push(item);
+            checksDigits.push(item);
         }
 
         if (Array.isArray(item)) {
 
-            item.forEach(digit => {
-                if (callback(digit)) {
-                    acc.push(digit)
-                }
-            });
+           return averageValue(item, callback)
         }
-
-        return acc;
-
-    },[]);
+    }
 
     for (let digit of checksDigits) {
         sum += digit;
     }
-
     return sum / checksDigits.length;
 };
 
@@ -755,7 +751,7 @@ const sumMatrixs = (matrix1, matrix2) => {
 //  16)Удалить из матрицы тот столбец который имеет хотя бы один нулевой элемент.
 
 
-const removeColumnWithZero = (matrix) => {
+const removeColumnWithZero = (matrix,callback) => {
 
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries');
@@ -765,7 +761,7 @@ const removeColumnWithZero = (matrix) => {
     let result = [];
     for (let i in clone) {
 
-        if (clone[i].some((item) => item == 0)) {
+        if (callback(item)) {
 
             let pos = clone[+i].indexOf(0);
 
@@ -781,7 +777,7 @@ const removeColumnWithZero = (matrix) => {
 
 // 16 Удалить из матрицы  строку которая имеет хотя бы один нулевой элемент;
 
-const removeRowZero = (matrix) => {
+const removeRowZero = (matrix, callback) => {
 
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries');
@@ -790,7 +786,7 @@ const removeRowZero = (matrix) => {
     let result = [];
     for (let row of matrix) {
 
-        if (row.includes(0) === false) {
+        if (callback(item)) {
             result.push(row);
         }
     }
@@ -803,138 +799,55 @@ const removeRowZero = (matrix) => {
 // Посчитать сумму  над и под главной диагональю и на главной диагональю
 
 
-const sumFromMatrix = (matrix) => {
+const matrixValueDiagonall = (matrix, callback) => {
 
     if (!Array.isArray(matrix)) {
         throw new Error('Wrong data entries');
     }
 
-    let results = {
-        'sum-above-diagonal': 0,
-        'sum-under-diagonal': 0,
-        'sum-diagonal': 0,
-    };
-
-    let copyMatrixAbove = matrix.map(item => item.slice());
-    let copyMatrixReverse = matrix.map(item => item.slice()).reverse();
-
-    let numbersAbove = [];
-    let numbersUnder = [];
+    let digitsDiagonal = [];
 
     for (let i = 0; i <= matrix.length - 1; i++) {
+        digitsDiagonal.push(matrix[i][i]);
+    }
 
-        let numberDiagonal = matrix[i][i]
-        results["sum-diagonal"] += numberDiagonal;
+    return callback(digitsDiagonal);
 
-        let valueAbove = copyMatrixAbove[i].slice(i + 1);
-        numbersAbove.push(...valueAbove);
+};
 
+
+const matrixValueUnderDiagonal = (matrix, callback) => {
+
+    if (!Array.isArray(matrix)) {
+        throw new Error('Wrong data entries');
+    }
+
+    let numbersUnder = [];
+    let copyMatrixReverse = matrix.map(item => item.slice()).reverse();
+
+    for(let i = 0; i <= matrix.length; i++){
         let valueUnder = copyMatrixReverse[i].reverse().slice(i + 1);
         numbersUnder.push(...valueUnder);
     }
 
-    for (let k = 0; k <= numbersAbove.length - 1; k++) {
-
-        results["sum-above-diagonal"] += +numbersAbove[k];
-        results["sum-under-diagonal"] += +numbersUnder[k];
-    }
-
-    return result;
+    return callback(numbersUnder);
 };
 
-// Посчитать количество нулевых элементов
-// // элементов матрицы над и под главной диагональю и на главной диагональю.
 
-const amountZeroMatrix = (matrix) => {
-
-    if (!Array.isArray(matrix)) {
-        throw new Error('Wrong data entries')
-    }
-
-    const results = {
-        'zeros-above-diagonal': 0,
-        'zeros-under-diagonal': 0,
-        'zeros-diagonal': 0,
-    };
-
-    let copyMatrixAbove = matrix.map(item => item.slice());
-    let copyMatrixReverse = matrix.map(item => item.slice()).reverse();
-
+const matrixValueAbove = (matrix, callback) => {
     let numbersAbove = [];
-    let numbersUnder = [];
 
     for (let i = 0; i <= matrix.length - 1; i++) {
-
         if (matrix[i][i] === 0){
             results['zeros-diagonal'] += 1;
         }
 
         let valueAbove = copyMatrixAbove[i].slice(i + 1);
         numbersAbove.push(...valueAbove);
-
-        let valueUnder = copyMatrixReverse[i].reverse().slice(i + 1);
-        numbersUnder.push(...valueUnder);
     }
-
-    for (let k = 0; k <= numbersAbove.length - 1; k++) {
-        if (+numbersAbove[k] === 0) {
-            results["zeros-above-diagonal"] += 1;
-        }
-
-        if (+numbersUnder[k] === 0) {
-            results["zeros-under-diagonal"] += 1;
-        }
-    }
-
-    return results;
+    return callback(numbersAbove);
 };
 
-// Посчитать среднее значение элементов матрицы над и под главной диагональю и на главной диагональю.
-
-const meanMatrix = (matrix) => {
-
-    if (!Array.isArray(matrix)) {
-        throw new Error('Wrong data entries')
-    }
-
-    let results = {
-        'mean-above-diagonal': 0,
-        'mean-under-diagonal': 0,
-        'mean-diagonal': 0,
-    };
-
-    let copyMatrixAbove = matrix.map(item => item.slice());
-    let numbersAbove = [];
-
-    let copyMatrixReverse = matrix.map(item => item.slice()).reverse();
-    let numbersUnder = [];
-
-
-    for (let i = 0; i <= matrix.length - 1; i++) {
-
-        let numberDiagonal = matrix[i][i]
-        results["mean-diagonal"] += numberDiagonal;
-
-        let valueAbove = copyMatrixAbove[i].slice(i + 1);
-        numbersAbove.push(...valueAbove);
-
-
-        let valueUnder = copyMatrixReverse[i].reverse().slice(i + 1);
-        numbersUnder.push(...valueUnder);
-    }
-
-    for (let k = 0; k <= numbersAbove.length - 1; k++) {
-        resulst["mean-above-diagonal"] += +numbersAbove[k];
-        results["mean-under-diagonal"] += +numbersUnder[k];
-    }
-
-    results["mean-diagonal"] = +((results["mean-above-diagonal"] / matrix.length).toFixed(2));
-    results["mean-above-diagonal"] = +((results["mean-above-diagonal"] / numbersAbove.length).toFixed(2));
-    results["mean-under-diagonal"] = +((results["mean-under-diagonal"] / numbersUnder.length).toFixed(2));
-
-
-    return results;
-};
 
 //18 Создать итерируемый объект, который на каждой итерации возвращает следующее значение числа фибоначчи
 //  (Реализовать с помощью итератора и генератора). Реализовать мемоизированную функцию. Реализовать с помощью рекурсии.
@@ -948,14 +861,11 @@ let fibonaciObj = {
         let next = 0;
         let flag = true;
 
-        while (flag) {
+        while (current !== Infinity) {
             let current = next;
             next = previous;
             previous = previous + current;
             yield current;
-            if (current == Infinity) {
-                flag = false;
-            };
         }
     },
 };
