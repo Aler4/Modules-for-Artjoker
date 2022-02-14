@@ -344,8 +344,6 @@ class Circle {
 
 const memoizeFactora = (() => {
 
- 
-
   let memory = {};
 
   return function(number,result){
@@ -863,6 +861,7 @@ const fibonaci = (() => {
     }
 
     if (number in memory) {
+      console.log(memory)
       return memory[number]
     }
 
