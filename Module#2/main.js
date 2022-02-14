@@ -7,19 +7,22 @@
 // своя реализация функции bind
 Function.prototype.customBind = function (contexts) {
   const sym = Symbol('fn');
+
   let selfFunc = {
     ...contexts, 
     [sym]: this, 
   };
+
   return function (...rest) {
     return selfFunc[sym](...rest);
-    };
+  };
 };
 
 
 // своя реализация функции call
 Function.prototype.customCall = function (contexts) {
   const sym = Symbol('fn');
+
   let selfFunc = {
     ...contexts,
     [sym]: this,
