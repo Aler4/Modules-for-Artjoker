@@ -1,98 +1,200 @@
-'use strict';
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-};
-var _BinaryTree_instances, _BinaryTree_parent, _BinaryTree_findSmaller;
+'use strict'
+
 // 1) Написать свою реализацию бинарного дерева поиска. (Возможности структуры данных должны быть: 
 // Добавить новый элемент, удалить элемент, найти элемент по его значению)
-class Unit {
-    constructor(value) {
-        this.value = value;
-        this.left = null;
-        this.right = null;
+
+class Tree {
+
+  root;
+  #parent;
+
+  constructor(){
+    this.root = null;
+  }
+
+  add(value, node){
+
+    let unit = {
+      value: value,
+      left: null,
+      right: null,
+    };
+
+    node = node || this.root;
+
+    if(this.root === null){
+      this.root = unit;
     }
-}
-class BinaryTree {
-    constructor() {
-        _BinaryTree_instances.add(this);
-        _BinaryTree_parent.set(this, void 0);
+
+    else if(node.value < value){
+
+      if(node.right === null){
+        node.right = unit;
+      }
+      this.add(value, node.right);
+    }
+
+    else if(node.value > value){
+      if(node.left === null){
+        node.left = unit;
+      }
+
+      this.add(value,node.left);
+    }
+    return this;
+  }
+
+  find(value, node){
+
+    node = node || this.root;
+
+    if(value === node.value && node !== null){
+      return node;
+    }
+
+    if(value > node.value && node.right !== null){
+      if(node.right.value === value){
+        this.#parent = node;
+      }
+      return this.find(value, node.right)
+    }
+
+    if(value < node.value && node.left !== null){
+      if(node.left.value === value){
+        this.#parent = node;
+      }
+      return this.find(value, node.left)
+    }
+
+    return null;
+  }
+
+  delete(value,path){
+
+    path = path || this.root;
+
+    let node = this.find(value, path);
+
+    if(node.right === null && node.left === null){
+      if(this.root.value === value){
         this.root = null;
+        return this;
+      }
+
+      for(let i in this.#parent){
+
+        if(this.#parent[i] !== null && this.#parent[i].value === value){
+          this.#parent[i] = null;
+
+          return this;
+        }
+      }
     }
-    add(value, node) {
-        let unit = new Unit(value);
-        node = node || this.root;
-        if (this.root === null) {
-            this.root = unit;
-        }
-        else if (node.value < value) {
-            if (node.right === null) {
-                node.right = unit;
-            }
-            this.add(value, node.right);
-        }
-        else if (node.value > value) {
-            if (node.left === null) {
-                node.left = unit;
-            }
-            this.add(value, node.left);
-        }
+
+    if(node.right === null && (node.left !== null && node.left !== undefined)){
+      this.#parent.left = node.left;
     }
-    find(value, node) {
-        node = node || this.root;
-        if (value === node.value) {
-            return node;
-        }
-        if (value > node.value && node.right !== null) {
-            if (node.right.value === value) {
-                __classPrivateFieldSet(this, _BinaryTree_parent, node, "f");
-            }
-            return this.find(value, node.right);
-        }
-        if (value < node.value && node.left !== null) {
-            if (node.left.value === value) {
-                __classPrivateFieldSet(this, _BinaryTree_parent, node, "f");
-            }
-            return this.find(value, node.left);
-        }
-        return null;
+
+    if(node.right !== null){
+      if (node.right.left !== null) {
+      let exchange = this.#findSmaller(node.right);
+      this.delete(exchange.value, node.right);
+      node.value = exchange.value; 
+      return this;
+      }
+      node.value = node.right.value;
+      node.right = null;
+      return this;
     }
-    delete(value, node, path) {
-        path = path || this.root;
-        node = this.find(value, path);
-        if (node.right === null && node.left === null) {
-            if (this.root.value === value) {
-                return this.root = null;
-            }
-            for (let i in __classPrivateFieldGet(this, _BinaryTree_parent, "f")) {
-                if (__classPrivateFieldGet(this, _BinaryTree_parent, "f")[i] !== null && __classPrivateFieldGet(this, _BinaryTree_parent, "f")[i].value === value) {
-                    return __classPrivateFieldGet(this, _BinaryTree_parent, "f")[i] = null;
-                }
-            }
-        }
-        if (node.right === null && (node.left !== null && node.left !== undefined)) {
-            __classPrivateFieldGet(this, _BinaryTree_parent, "f").left = node.left;
-        }
-        if (node.right !== null) {
-            let exchange = __classPrivateFieldGet(this, _BinaryTree_instances, "m", _BinaryTree_findSmaller).call(this, node.right);
-            console.log(exchange);
-            this.delete(exchange.value, node.right);
-            return node.value = exchange.value;
-        }
+  }
+
+  #findSmaller(node){
+
+    while(node.left !== null){
+      return this.#findSmaller(node.left);  
     }
+
+    if(node.left === null){
+    return node;
+    }
+  }
+
 }
-_BinaryTree_parent = new WeakMap(), _BinaryTree_instances = new WeakSet(), _BinaryTree_findSmaller = function _BinaryTree_findSmaller(node) {
-    while (node.left !== null) {
-        return __classPrivateFieldGet(this, _BinaryTree_instances, "m", _BinaryTree_findSmaller).call(this, node.left);
+let tree = new Tree();
+
+// 2) Написать сортировку двумя различными методами 
+// (Можно выбрать любые методы сортировки, самые простые: пузырьковая, выбором)
+
+const shakerSort = (array,callback) => {
+  let begin = 0;
+  let end = array.length;
+  let isSort = true;
+
+  for(;isSort;){
+
+    isSort = false;
+
+    for(let i = begin; i < end; i++){
+      if(callback(array[i],array[i+1])){
+        [array[i], array[i +1]] = [array[i + 1], array[i]];
+        isSort = true;
+      }
     }
-    if (node.left === null) {
-        return node;
+
+    begin++
+
+      if(!isSort){
+      break;
     }
+
+    for(let i = end; i > begin; i--){
+      if(callback(array[i -1], array[i])){
+        [array[i], array[i - 1]] = [array[i -1], array[i]];
+        isSort = true;
+      }
+    }
+    end--;
+  }
+    
+  return array;
+};
+
+
+const merge = (firstArray, secondArray, callback) => {
+  let result = [];
+  let element;
+
+    while(firstArray.length > 0 && secondArray.length > 0){
+
+      if(callback(firstArray[0], secondArray[0])){
+        element = secondArray.shift();
+        result.push(element)
+      }
+
+      if(!callback(firstArray[0], secondArray[0])){
+        element = firstArray.shift();
+        result.push(element);
+      }
+      
+    }
+
+    return [...result,...firstArray,...secondArray];
+};
+
+
+const mergeSort = (array,callback) => {
+
+  if(!Array.isArray(array)  || !array.length){
+    return null;
+  }
+
+  if(array.length <= 1){
+    return array;
+  }
+
+  const middle = Math.floor(array.length /2);
+  const left = array.slice(0,middle);
+  const right = array.slice(middle,array.length); 
+
+  return merge(mergeSort(left,callback), mergeSort(right,callback),callback);
 };

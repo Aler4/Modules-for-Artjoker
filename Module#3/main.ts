@@ -4,25 +4,19 @@
 // Добавить новый элемент, удалить элемент, найти элемент по его значению)
 
 
-class Unit {
-
-	value: number;
-	left: Unit | null;
-	right: Unit | null;
-
-	constructor(value: number){
-		this.value = value;
-		this.left  = null;
-		this.right = null;
-	}
+interface Unit {
+	value: number | null,
+	left: Unit | null,
+	right: Unit | null
 }
 
-class BinaryTree {
+class Tree {
 
 	root: Unit | null;
 	#parent: Unit | null;
 
 	#findSmaller(node){
+
 		while(node.left !== null){
 
 			return this.#findSmaller(node.left);	
@@ -39,7 +33,12 @@ class BinaryTree {
 
 	add(value, node){
 
-		let unit = new Unit(value);
+		let unit: Unit = {
+			value: value,
+			left: null,
+			right: null,
+		};
+
 		node = node || this.root;
 
 		if(this.root === null){
@@ -65,8 +64,10 @@ class BinaryTree {
 	}
 
 	find(value, node){
+
 		node = node || this.root;
-		if(value === node.value){
+
+		if(value === node.value && node !== null){
 			return node;
 		}
 
@@ -87,22 +88,28 @@ class BinaryTree {
 		return null;
 	}
 
-	delete(value, node,path){
+	delete(value,path){
+
 		path = path || this.root;
-		node = this.find(value, path);
+		let node = this.find(value, path);
 
 		if(node.right === null && node.left === null){
 
 			if(this.root.value === value){
-				return this.root = null;
+
+				this.root = null;
+				return this;
+
 			}
 
 			for(let i in this.#parent){
 				if(this.#parent[i] !== null && this.#parent[i].value === value){
-					return this.#parent[i] = null;
+
+					this.#parent[i] = null;
+					return this;
+
 				}
 			}
-
 		}
 
 		if(node.right === null && (node.left !== null && node.left !== undefined)){
@@ -111,11 +118,92 @@ class BinaryTree {
 
 		if(node.right !== null){
 			let exchange = this.#findSmaller(node.right);
-			console.log(exchange)
 
-			this.delete(exchange.value, node.right);
-			return node.value = exchange.value;
+			this.delete(exchange.value,node.right);
+
+			node.value = exchange.value;
+
+			return this;
 		}
 	}
 
 }
+
+// 2) Написать сортировку двумя различными методами 
+// (Можно выбрать любые методы сортировки, самые простые: пузырьковая, выбором)
+
+
+///
+const shakerSort:Function = (array,callback):Array<number | string> => {
+	let begin: number = 0;
+	let end: number = array.length;
+	let isSort = true;
+
+	for(;isSort;){
+
+		isSort = false;
+
+		for(let i = begin; i < end; i++){
+			if(callback(array[i],array[i+1])){
+				[array[i], array[i +1]] = [array[i + 1], array[i]];
+				isSort = true;
+			}
+		}
+
+		begin++
+
+			if(!isSort){
+			break;
+		}
+
+		for(let i = end; i > begin; i--){
+			if(callback(array[i -1], array[i])){
+				[array[i], array[i - 1]] = [array[i -1], array[i]];
+				isSort = true;
+			}
+		}
+		end--;
+	}
+		
+	return array;
+};
+
+
+const merge = (firstArray, secondArray, callback) => {
+	let result = [];
+	let element;
+
+		while(firstArray.length > 0 && secondArray.length > 0){
+
+			if(callback(firstArray[0], secondArray[0])){
+				element = secondArray.shift();
+				result.push(element)
+			}
+
+			if(!callback(firstArray[0], secondArray[0])){
+				element = firstArray.shift();
+				result.push(element);
+			}
+			
+		}
+
+		return [...result,...firstArray,...secondArray];
+};
+
+
+const mergeSort = (array,callback) => {
+
+	if(!Array.isArray(array)  || !array.length){
+		return null;
+	}
+
+	if(array.length <= 1){
+		return array;
+	}
+
+	const middle = Math.floor(array.length /2);
+	const left = array.slice(0,middle);
+	const right = array.slice(middle,array.length); 
+
+	return merge(mergeSort(left,callback), mergeSort(right,callback),callback);
+};
