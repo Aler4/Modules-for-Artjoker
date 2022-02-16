@@ -4,12 +4,12 @@
 // Добавить новый элемент, удалить элемент, найти элемент по его значению)
 
 
-class Unit {
+class Node {
 
-  #parent;
   value;
   left;
   right;
+
 
   constructor(value){
 
@@ -17,17 +17,17 @@ class Unit {
   this.left = null;
   this.right = null;    
 
-  }
+  } 
 
   add(value, node){
 
-    let unit = new Unit(value);
+    let child = new Node(value);
     node = node || this;
 
     if(node.value < value){
 
       if(node.right === null){
-        node.right = unit;
+        node.right = child;
       }
       this.add(value, node.right);
     }
@@ -35,7 +35,7 @@ class Unit {
     else if(node.value > value){
       if(node.left === null){
 
-        node.left = unit;
+        node.left = child;
       }
 
       this.add(value,node.left);
@@ -51,17 +51,13 @@ class Unit {
     }
 
     if(value > node.value && node.right !== null){
-      if(node.right.value === value){
-        this.#parent = node;
-      }
+    
       return this.find(value, node.right)
     }
 
     if(value < node.value && node.left !== null){
 
-      if(node.left.value === value){
-        this.#parent = node;
-      }
+      
       return this.find(value, node.left)
     }
 
@@ -71,35 +67,28 @@ class Unit {
   delete(value,path){
 
     path = path || this;
+
     let node = this.find(value, path);
+    let parent = this.findParent(value);
 
-    if(node.right === null && node.left === null){
+    if( node.left === null && node.right === null ){
 
-      if(this.value === value){
-
+      if(parent === null){
         this.value = null;
-        return this;
-
       }
 
-      for(let i in this.#parent){
-        if(this.#parent[i] !== null && this.#parent[i].value === value){
-
-          this.#parent[i] = null;
-          return this;
-
-        }
-      }
+     (parent.left === node) ? parent.left = null : parent.right = null;
     }
 
     if(node.right === null && (node.left !== null && node.left !== undefined)){
-      this.#parent.left = node.left;
+
+      (parent.left === node) ? parent.left = node.left : parent.right = node.left;
     }
 
     if(node.right !== null){
 
       if (node.right.left !== null) {
-      let exchange = this.#findSmaller(node.right);
+      let exchange = this.findSmaller(node.right);
       this.delete(exchange.value, node.right);
 
       node.value = exchange.value; 
@@ -111,20 +100,43 @@ class Unit {
       node.right = null;
       return this;
     }
+    
   }
 
 
-  static #findSmaller(node){
+  findSmaller(node){
 
     while(node.left !== null){
-
-      return this.#findSmaller(node.left);  
+      return this.findSmaller(node.left);  
     }
 
     if(node.left === null){
     return node;
     }
+  }
+
+  findParent(value,node){
+    node = node || this;
+
+    if(this.find(value) === node.right){
+      return node;
+    }
+
+    else if (this.find(value) === node.left) {
+      return node;
+    }
+  
+    if(value > node.value && node.right !== null){
     
+      return this.findParent(value, node.right)
+    }
+
+    if(value < node.value && node.left !== null){
+      
+      return this.findParent(value, node.left)
+    }
+
+    return null;
   }
 }
 
@@ -133,78 +145,79 @@ class Unit {
 
 
 const shakerSort = (array,callback) => {
-  if (!Array.isArray(array)) {
-    throw new Error('Wrong data type');
+
+  if (Array.isArray(array)) {
+    throw new Error('Wrong data type')
   }
-  let begin = 0;
-  let end = array.length;
+
+  let end = array.length -1;
+  let start = 0;
   let isSort = true;
 
   while(isSort){
-
     isSort = false;
 
-    for(let i = begin; i < end; i++){
-      if(callback(array[i],array[i+1])){
-        [array[i], array[i +1]] = [array[i + 1], array[i]];
+    for(let i = start; i < end; i++){
+
+      if(callback(array[i],array[i +1])){
+        [array[i], array[i + 1]] = [array[i+1], array[i]];
         isSort = true;
       }
     }
+    start++;
 
-    begin++
-
-      if(!isSort){
+    if(!isSort){
       break;
     }
-
-    for(let i = end; i > begin; i--){
-      if(callback(array[i -1], array[i])){
-        [array[i], array[i - 1]] = [array[i -1], array[i]];
+    end--;
+    for(let i = end; i > start; i--){
+       if(callback(array[i -1],array[i])){
+        [array[i], array[i-1]] = [array[i-1], array[i]];
         isSort = true;
       }
     }
-    end--;
   }
-    
   return array;
 };
 
-
-const merge = (firstArray, secondArray, callback) => {
-  let result = [];
-  let element;
-
-    while(firstArray.length > 0 && secondArray.length > 0){
-
-      if(callback(firstArray[0], secondArray[0])){
-        element = secondArray.shift();
-        result.push(element)
-      }
-
-      if(!callback(firstArray[0], secondArray[0])){
-        element = firstArray.shift();
-        result.push(element);
-      }
-      
-    }
-
-    return [...result,...firstArray,...secondArray];
-};
 
 
 const mergeSort = (array,callback) => {
 
   if(!Array.isArray(array)){
-    throw new Error('Wrong type data');
+    throw new Error('Wrong data type');
   }
 
-  if(array.length <= 1){
+  if(array.length === 1){
     return array;
   }
 
-  const middle = Math.floor(array.length /2);
-  const left = array.slice(0,middle);
-  const right = array.slice(middle,array.length); 
+  let middle = Math.floor(array.length /2);
+  let leftSideOfArray = array.slice(0, middle); 
+  let rightSideOfArray = array.slice(middle);
 
-  return merge(mergeSort(left,callback), mergeSort(right,callback),callback);
+  const merge = (firstArray, secondArray, callback) => {
+    let result = [];
+    let element;
+
+    while(firstArray.length > 0 && secondArray.length > 0){
+
+      if(callback(firstArray[0], secondArray[0])){
+        element = firstArray.shift();
+      result.push(element)
+
+      }
+
+      if(!callback(firstArray[0],secondArray[0])){
+        element = secondArray.shift();
+      result.push(element)
+        
+      }
+
+    }
+    return [...result, ... firstArray, ...secondArray];
+  }
+
+
+  return merge(mergeSort(leftSideOfArray,callback),mergeSort(rightSideOfArray,callback),callback);
 };
