@@ -114,7 +114,7 @@ class Unit {
   }
 
 
-  #findSmaller(node){
+  static #findSmaller(node){
 
     while(node.left !== null){
 
