@@ -20,7 +20,10 @@ class Node {
   } 
 
   add(value, node){
-
+    if(this.value === null){
+      this.value = value;
+      return this;
+    }
     let child = new Node(value);
     node = node || this;
 
@@ -71,18 +74,30 @@ class Node {
     let node = this.find(value, path);
     let parent = this.findParent(value);
 
-    if( node.left === null && node.right === null ){
+    if( node?.left === null && node?.right === null ){
 
       if(parent === null){
         this.value = null;
       }
 
-     (parent.left === node) ? parent.left = null : parent.right = null;
+     if (parent !== null) {
+        ( parent.left === node) ? parent.left = null : parent.right = null;
+      }
+      return this;
     }
 
     if(node.right === null && (node.left !== null && node.left !== undefined)){
+      if (parent === null) {
+        this.right = this.left.right || null;
+        this.value = this.left.value;
+        this.left = this.left.left || null;
 
-      (parent.left === node) ? parent.left = node.left : parent.right = node.left;
+      }
+
+      if (parent !== null) {
+        ( parent.left === node) ? parent.left = node.left : parent.right = node.left;
+      }
+      return this;
     }
 
     if(node.right !== null){
