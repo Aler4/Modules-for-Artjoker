@@ -20,10 +20,13 @@ class Node {
   } 
 
   add(value, node){
+
     if(this.value === null){
+
       this.value = value;
       return this;
     }
+
     let child = new Node(value);
     node = node || this;
 
@@ -36,8 +39,8 @@ class Node {
     }
 
     else if(node.value > value){
-      if(node.left === null){
 
+      if(node.left === null){
         node.left = child;
       }
 
@@ -54,13 +57,10 @@ class Node {
     }
 
     if(value > node.value && node.right !== null){
-    
       return this.find(value, node.right)
     }
 
     if(value < node.value && node.left !== null){
-
-      
       return this.find(value, node.left)
     }
 
@@ -75,7 +75,6 @@ class Node {
     let parent = this.findParent(value);
 
     if( node?.left === null && node?.right === null ){
-
       if(parent === null){
         this.value = null;
       }
@@ -91,7 +90,6 @@ class Node {
         this.right = this.left.right || null;
         this.value = this.left.value;
         this.left = this.left.left || null;
-
       }
 
       if (parent !== null) {
@@ -103,6 +101,7 @@ class Node {
     if(node.right !== null){
 
       if (node.right.left !== null) {
+        
       let exchange = this.findSmaller(node.right);
       this.delete(exchange.value, node.right);
 
@@ -162,7 +161,7 @@ class Node {
 const shakerSort = (array,callback) => {
 
   if (Array.isArray(array)) {
-    throw new Error('Wrong data type')
+    throw new Error('Wrong data type');
   }
 
   let end = array.length -1;
@@ -219,20 +218,19 @@ const mergeSort = (array,callback) => {
 
       if(callback(firstArray[0], secondArray[0])){
         element = firstArray.shift();
-      result.push(element)
+        result.push(element);
 
       }
 
       if(!callback(firstArray[0],secondArray[0])){
         element = secondArray.shift();
-      result.push(element)
+        result.push(element);
         
       }
 
     }
     return [...result, ... firstArray, ...secondArray];
   }
-
 
   return merge(mergeSort(leftSideOfArray,callback),mergeSort(rightSideOfArray,callback),callback);
 };
