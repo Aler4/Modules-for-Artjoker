@@ -3,30 +3,28 @@
 // 1) Написать свою реализацию бинарного дерева поиска. (Возможности структуры данных должны быть: 
 // Добавить новый элемент, удалить элемент, найти элемент по его значению)
 
-class Tree {
 
-  root;
+class Unit {
+
   #parent;
+  value;
+  left;
+  right;
 
-  constructor(){
-    this.root = null;
+  constructor(value){
+
+  this.value = value;
+  this.left = null;
+  this.right = null;    
+
   }
 
   add(value, node){
 
-    let unit = {
-      value: value,
-      left: null,
-      right: null,
-    };
+    let unit = new Unit(value);
+    node = node || this;
 
-    node = node || this.root;
-
-    if(this.root === null){
-      this.root = unit;
-    }
-
-    else if(node.value < value){
+    if(node.value < value){
 
       if(node.right === null){
         node.right = unit;
@@ -36,17 +34,17 @@ class Tree {
 
     else if(node.value > value){
       if(node.left === null){
+
         node.left = unit;
       }
 
       this.add(value,node.left);
     }
-    return this;
   }
 
   find(value, node){
 
-    node = node || this.root;
+    node = node || this;
 
     if(value === node.value && node !== null){
       return node;
@@ -60,6 +58,7 @@ class Tree {
     }
 
     if(value < node.value && node.left !== null){
+
       if(node.left.value === value){
         this.#parent = node;
       }
@@ -71,22 +70,24 @@ class Tree {
 
   delete(value,path){
 
-    path = path || this.root;
-
+    path = path || this;
     let node = this.find(value, path);
 
     if(node.right === null && node.left === null){
-      if(this.root.value === value){
-        this.root = null;
+
+      if(this.value === value){
+
+        this.value = null;
         return this;
+
       }
 
       for(let i in this.#parent){
-
         if(this.#parent[i] !== null && this.#parent[i].value === value){
-          this.#parent[i] = null;
 
+          this.#parent[i] = null;
           return this;
+
         }
       }
     }
@@ -96,40 +97,47 @@ class Tree {
     }
 
     if(node.right !== null){
+
       if (node.right.left !== null) {
       let exchange = this.#findSmaller(node.right);
       this.delete(exchange.value, node.right);
+
       node.value = exchange.value; 
       return this;
+
       }
+
       node.value = node.right.value;
       node.right = null;
       return this;
     }
   }
 
+
   #findSmaller(node){
 
     while(node.left !== null){
+
       return this.#findSmaller(node.left);  
     }
 
     if(node.left === null){
     return node;
     }
+    
   }
-
 }
 
 // 2) Написать сортировку двумя различными методами 
 // (Можно выбрать любые методы сортировки, самые простые: пузырьковая, выбором)
 
-const shakerSort = (array,callback) => {
-  let begin = 0;
-  let end = array.length;
+
+const shakerSort: = (array,callback) => {
+  let begin: number = 0;
+  let end: number = array.length;
   let isSort = true;
 
-  for(;isSort;){
+  while(isSort){
 
     isSort = false;
 

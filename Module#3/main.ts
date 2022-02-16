@@ -4,48 +4,34 @@
 // Добавить новый элемент, удалить элемент, найти элемент по его значению)
 
 
-interface Unit {
-	value: number | null,
-	left: Unit | null,
-	right: Unit | null
-}
+// interface Unit {
+// 	value: number | null,
+// 	left: Unit | null,
+// 	right: Unit | null
+// }
 
-class Tree {
+// @ts-ignor
+class Unit {
 
-	root: Unit | null;
 	#parent: Unit | null;
+	value: number | null;
+	left: Unit | null;
+	right: Unit | null;
 
-	#findSmaller(node){
+	constructor(value){
 
-		while(node.left !== null){
-
-			return this.#findSmaller(node.left);	
-		}
-		if(node.left === null){
-		return node;
-		}
-	}
-
-	constructor(){
-		this.root = null;
+	this.value = value;
+	this.left = null;
+	this.right = null;		
 
 	}
 
 	add(value, node){
 
-		let unit: Unit = {
-			value: value,
-			left: null,
-			right: null,
-		};
+		let unit = new Unit(value);
+		node = node || this;
 
-		node = node || this.root;
-
-		if(this.root === null){
-			this.root = unit;
-		}
-
-		else if(node.value < value){
+		if(node.value < value){
 
 			if(node.right === null){
 				node.right = unit;
@@ -65,7 +51,7 @@ class Tree {
 
 	find(value, node){
 
-		node = node || this.root;
+		node = node || this;
 
 		if(value === node.value && node !== null){
 			return node;
@@ -79,6 +65,7 @@ class Tree {
 		}
 
 		if(value < node.value && node.left !== null){
+
 			if(node.left.value === value){
 				this.#parent = node;
 			}
@@ -90,14 +77,14 @@ class Tree {
 
 	delete(value,path){
 
-		path = path || this.root;
+		path = path || this;
 		let node = this.find(value, path);
 
 		if(node.right === null && node.left === null){
 
-			if(this.root.value === value){
+			if(this.value === value){
 
-				this.root = null;
+				this.value = null;
 				return this;
 
 			}
@@ -117,17 +104,37 @@ class Tree {
 		}
 
 		if(node.right !== null){
-			let exchange = this.#findSmaller(node.right);
 
-			this.delete(exchange.value,node.right);
+      if (node.right.left !== null) {
 
-			node.value = exchange.value;
+      let exchange = this.#findSmaller(node.right);
+      this.delete(exchange.value, node.right);
+      node.value = exchange.value; 
+      return this;
 
-			return this;
-		}
+      }
+
+      node.value = node.right.value;
+      node.right = null;
+      return this;
+    }
 	}
 
+
+	#findSmaller(node){
+
+		while(node.left !== null){
+
+			return this.#findSmaller(node.left);	
+		}
+
+		if(node.left === null){
+		return node;
+		}
+		
+	}
 }
+let tree = new Unit(5)
 
 // 2) Написать сортировку двумя различными методами 
 // (Можно выбрать любые методы сортировки, самые простые: пузырьковая, выбором)
