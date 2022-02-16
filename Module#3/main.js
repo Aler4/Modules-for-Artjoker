@@ -132,9 +132,12 @@ class Unit {
 // (Можно выбрать любые методы сортировки, самые простые: пузырьковая, выбором)
 
 
-const shakerSort: = (array,callback) => {
-  let begin: number = 0;
-  let end: number = array.length;
+const shakerSort = (array,callback) => {
+  if (!Array.isArray(array)) {
+    throw new Error('Wrong data type');
+  }
+  let begin = 0;
+  let end = array.length;
   let isSort = true;
 
   while(isSort){
@@ -191,8 +194,8 @@ const merge = (firstArray, secondArray, callback) => {
 
 const mergeSort = (array,callback) => {
 
-  if(!Array.isArray(array)  || !array.length){
-    return null;
+  if(!Array.isArray(array)){
+    throw new Error('Wrong type data');
   }
 
   if(array.length <= 1){
