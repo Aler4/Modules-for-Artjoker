@@ -7,7 +7,6 @@
 // своя реализация функции bind
 Function.prototype.customBind = function (contexts) {
   const sym = Symbol('fn');
-
   let selfFunc = {
     ...contexts, 
     [sym]: this, 
@@ -22,7 +21,6 @@ Function.prototype.customBind = function (contexts) {
 // своя реализация функции call
 Function.prototype.customCall = function (contexts) {
   const sym = Symbol('fn');
-
   let selfFunc = {
     ...contexts,
     [sym]: this,
@@ -38,24 +36,22 @@ Function.prototype.customCall = function (contexts) {
 //  следующих функций: map, filter, reduce, find, forEach. Без использования стандартных функций.
 // map
 Array.prototype.customMap = function (callback) {
-  let selfArr = this;
   let result = [];
 
-  for (let i = 0; i <= selfArr.length - 1; i++) {
-      result.push(callback(selfArr[i], i, selfArr));
+  for (let i = 0; i <= this.length - 1; i++) {
+      result.push(callback(this[i], i, selfArr));
   }
   return result;
 };
     // reduce
 Array.prototype.customReducer = function (callback, initial) {
 
-  let selfArr = this;
-  typeof selfArr[0] === 'string' ? initial = initial || '' : initial = initial || 0;
+  typeof this[0] === 'string' ? initial = initial || '' : initial = initial || 0;
 
   let result = initial;
 
-  for (let i = 0; i <= selfArr.length - 1; i++) {
-      result = callback(result, selfArr[i], i, selfArr);
+  for (let i = 0; i <= this.length - 1; i++) {
+      result = callback(result, this[i], i, this);
   }
 
   return result;
@@ -63,14 +59,12 @@ Array.prototype.customReducer = function (callback, initial) {
 
     // filter
 Array.prototype.customFilter = function (callback) {
-
-  let selfArr = this;
   let result = [];
 
-  for (let i = 0; i < selfArr.length; i++) {
+  for (let i = 0; i < this.length; i++) {
 
-    if (callback(selfArr[i], i, selfArr)) {
-        result.push(selfArr[i]);
+    if (callback(this[i], i, selfArr)) {
+        result.push(this[i]);
     }
 
   }
@@ -79,20 +73,18 @@ Array.prototype.customFilter = function (callback) {
 
 // forEach
 Array.prototype.customForEach = function (callback) {
-  let selfArr = this;
-  for (let i = 0; i < selfArr.length; i++) {
-    callback(selfArr[i], i, selfArr);
+  for (let i = 0; i < this.length; i++) {
+    callback(this[i], i, this);
   }
 };
 
 //find
 Array.prototype.customFind = function (callback) {
-  let selfArr = this;
   let result;
-  for (let i = 0; i <= selfArr.length; i++) {
+  for (let i = 0; i <= this.length; i++) {
 
-    if (callback(selfArr[i], i, selfArr)) {
-        result = selfArr[i];
+    if (callback(this[i], i, this)) {
+        result = this[i];
         break;
     }
   }

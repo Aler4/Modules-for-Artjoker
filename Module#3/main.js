@@ -10,7 +10,6 @@ class Node {
   left;
   right;
 
-
   constructor(value){
 
   this.value = value;
@@ -21,31 +20,45 @@ class Node {
 
   add(value, node){
 
-    if(this.value === null){
+    node = node || this;
 
+    if(this.value === null){
       this.value = value;
       return this;
     }
+    
 
-    let child = new Node(value);
-    node = node || this;
-
-    if(node.value < value){
+    if(node.value < value || node < value){
 
       if(node.right === null){
-        node.right = child;
+        node.right = value;
+        return this;  
       }
+
+      if (typeof node.right === 'number') {
+        let temp = node.right;
+        node.right = new Node(temp);
+      }
+
       this.add(value, node.right);
     }
 
-    else if(node.value > value){
+    else if(node.value > value || node > value){
 
       if(node.left === null){
-        node.left = child;
+       node.left = value;
+       return this;
+       
+      }
+
+      if (typeof node.left === 'number') {
+        let temp = node.left;
+        node.left = new Node(temp);
       }
 
       this.add(value,node.left);
     }
+    return this;
   }
 
   find(value, node){
@@ -53,6 +66,10 @@ class Node {
     node = node || this;
 
     if(value === node.value && node !== null){
+      return node;
+
+    }
+    if(node.right === value || node.left === value){
       return node;
     }
 
@@ -74,58 +91,104 @@ class Node {
     let node = this.find(value, path);
     let parent = this.findParent(value);
 
-    if( node?.left === null && node?.right === null ){
-      if(parent === null){
-        this.value = null;
-      }
-
-     if (parent !== null) {
-        ( parent.left === node) ? parent.left = null : parent.right = null;
-      }
-      return this;
-    }
-
-    if(node.right === null && (node.left !== null && node.left !== undefined)){
-      if (parent === null) {
-        this.right = this.left.right || null;
-        this.value = this.left.value;
-        this.left = this.left.left || null;
-      }
-
-      if (parent !== null) {
-        ( parent.left === node) ? parent.left = node.left : parent.right = node.left;
-      }
-      return this;
-    }
-
-    if(node.right !== null){
-
-      if (node.right.left !== null) {
-        
-      let exchange = this.findSmaller(node.right);
-      this.delete(exchange.value, node.right);
-
-      node.value = exchange.value; 
-      return this;
-
-      }
-
-      node.value = node.right.value;
-      node.right = null;
-      return this;
-    }
     
-  }
 
+
+    if(node.value === value && (node.right === null && node.left === null)){
+        node.value = null;
+        this.fixNode(parent,node)
+    }
+
+    if(node.left === value ){
+        node.left = null;
+        this.fixNode(parent,node)
+    }
+
+    if(node.right === value){
+        node.right = null;
+        this.fixNode(parent,node)
+    }
+
+    
+    if(node.value === value && (node.left !== null && node.right !== null) ){
+
+      if(typeof node.right === 'object' && (node.right.left !== null) ){
+
+        if( typeof node.right.left === 'number'){
+          node.value = node.right.left;
+          node.right.left = null;
+          this.fixNode(parent,node)
+          return this;
+        }
+
+        let newValue = this.findSmaller(node.right)
+        node.value = newValue;
+        this.delete(newValue,node.right);
+        this.fixNode(parent,node)
+        return this;
+
+      }
+
+      if(typeof node.right === 'number'){
+        node.value = node.right;
+        node.right = null;
+        return this;
+      }
+    }
+
+    if(node.value === value && (node.left !== null && node.right === null )){
+
+      if(typeof node.left === 'object'){
+        node.value = node.left.value;
+        node.right = node.left.right;
+        node.left = node.left.left;
+        this.fixNode(parent,node)
+        return this;
+      }
+
+      if(typeof node.left === 'number'){
+        node.value = node.left;
+        node.left = null;
+        this.fixNode(parent,node)     
+        return this; 
+      }
+        
+    }
+
+
+    if(node.value === value && (node.right !== null && node.left === null) ){
+
+      if(typeof node.right === 'object'){
+        node.value = node.right.value;
+        node.left = node.right.left;
+        node.right = node.right.right;
+        this.fixNode(parent,node) 
+        return this;
+      }
+
+      if(typeof node.right === 'number'){
+        node.value = node.right;
+        node.right = null;
+        this.fixNode(parent,node) 
+        return this;
+      }   
+    }
+      return this;
+  }
 
   findSmaller(node){
 
-    while(node.left !== null){
+    while((node?.left !== null || node.left !== undefined)  &&  typeof node.left !== 'number'){
+      debugger
       return this.findSmaller(node.left);  
     }
 
+    if (typeof node.left === 'number') {
+      return node.left
+    }
+
     if(node.left === null){
-    return node;
+    return node.value;
     }
   }
 
@@ -152,20 +215,36 @@ class Node {
 
     return null;
   }
+
+  fixNode(parent,node){
+  
+    if(parent && (node.left === null && node.right === null)){
+
+      if( parent.left && parent.left.value === node.value){
+        parent.left = node.value;
+      }
+ 
+      if( parent.right && parent.right.value === node.value){
+        parent.right = node.value;
+      }
+
+      return this;
+    }
+  }
 }
 
 // 2) Написать сортировку двумя различными методами 
 // (Можно выбрать любые методы сортировки, самые простые: пузырьковая, выбором)
 
 
-const shakerSort = (array,callback) => {
+Array.prototype.shakerSort = function(callback){
 
-  if (Array.isArray(array)) {
-    throw new Error('Wrong data type');
-  }
+  // if (Array.isArray(this)) {
+  //   throw new Error('Wrong data type');
+  // }
 
-  let end = array.length -1;
-  let start = 0;
+  let end = this.length;
+  let start = -1;
   let isSort = true;
 
   while(isSort){
@@ -173,8 +252,8 @@ const shakerSort = (array,callback) => {
 
     for(let i = start; i < end; i++){
 
-      if(callback(array[i],array[i +1])){
-        [array[i], array[i + 1]] = [array[i+1], array[i]];
+      if(callback(this[i],this[i +1])){
+        [this[i], this[i + 1]] = [this[i+1], this[i]];
         isSort = true;
       }
     }
@@ -185,30 +264,29 @@ const shakerSort = (array,callback) => {
     }
     end--;
     for(let i = end; i > start; i--){
-       if(callback(array[i -1],array[i])){
-        [array[i], array[i-1]] = [array[i-1], array[i]];
+       if(callback(this[i -1],this[i])){
+        [this[i], this[i-1]] = [this[i-1], this[i]];
         isSort = true;
       }
     }
   }
-  return array;
+  return this;
 };
 
 
+Array.prototype.mergeSort = function(callback){
 
-const mergeSort = (array,callback) => {
+  // if(!Array.isArray(this)){
+  //   throw new Error('Wrong data type');
+  // }
 
-  if(!Array.isArray(array)){
-    throw new Error('Wrong data type');
+  if(this.length === 1){
+    return this;
   }
 
-  if(array.length === 1){
-    return array;
-  }
-
-  let middle = Math.floor(array.length /2);
-  let leftSideOfArray = array.slice(0, middle); 
-  let rightSideOfArray = array.slice(middle);
+  let middle = Math.floor(this.length /2);
+  let leftSideOfArray = this.slice(0, middle); 
+  let rightSideOfArray = this.slice(middle);
 
   const merge = (firstArray, secondArray, callback) => {
     let result = [];
@@ -225,12 +303,11 @@ const mergeSort = (array,callback) => {
       if(!callback(firstArray[0],secondArray[0])){
         element = secondArray.shift();
         result.push(element);
-        
       }
 
     }
     return [...result, ... firstArray, ...secondArray];
   }
 
-  return merge(mergeSort(leftSideOfArray,callback),mergeSort(rightSideOfArray,callback),callback);
+  return merge(leftSideOfArray.mergeSort(callback), rightSideOfArray.mergeSort(callback),callback);
 };
