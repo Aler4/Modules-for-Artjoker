@@ -69,6 +69,7 @@ class Node {
       return node;
 
     }
+
     if(node.right === value || node.left === value){
       return node;
     }
@@ -95,18 +96,18 @@ class Node {
 
 
     if(node.value === value && (node.right === null && node.left === null)){
-        node.value = null;
-        this.fixNode(parent,node)
+      node.value = null;
+      this.fixNode(parent,node)
     }
 
     if(node.left === value ){
-        node.left = null;
-        this.fixNode(parent,node)
+      node.left = null;
+      this.fixNode(parent,node)
     }
 
     if(node.right === value){
-        node.right = null;
-        this.fixNode(parent,node)
+      node.right = null;
+      this.fixNode(parent,node)
     }
 
     
@@ -126,7 +127,6 @@ class Node {
         this.delete(newValue,node.right);
         this.fixNode(parent,node)
         return this;
-
       }
 
       if(typeof node.right === 'number'){
@@ -190,6 +190,7 @@ class Node {
     if(node.left === null){
     return node.value;
     }
+    
   }
 
   findParent(value,node){
