@@ -93,8 +93,6 @@ class Node {
     let parent = this.findParent(value);
 
     
-
-
     if(node.value === value && (node.right === null && node.left === null)){
       node.value = null;
       this.fixNode(parent,node)
@@ -190,7 +188,7 @@ class Node {
     if(node.left === null){
     return node.value;
     }
-    
+
   }
 
   findParent(value,node){
