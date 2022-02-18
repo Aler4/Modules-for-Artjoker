@@ -1,0 +1,7 @@
+{
+  "files": ["app/ts/*.ts"],
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "target": "es2020",
+  }
+}
