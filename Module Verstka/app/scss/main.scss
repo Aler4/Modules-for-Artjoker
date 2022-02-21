@@ -1,34 +1,247 @@
-* {
-	padding: 0;
-	margin: 0;
-	border: none;
-	box-sizing: border-box;
-}
 
-ul {
-	list-style: none;
+@font-face {
+	font-family: 'Proxima Nova Bold';
+	src: url('../fonts/font_proxima/proxima_nova_bold.eot');
+	src: url('../fonts/font_proxima/proxima_nova_bold.eot?#iefix') format('embedded-opentype'), 
+		url('../fonts/font_proxima/proxima_nova_bold.woff2') format('woff2'),
+		url('../fonts/font_proxima/proxima_nova_bold.woff') format('woff'), 
+		url('../fonts/font_proxima/proxima_nova_bold.ttf') format('truetype'), 
+		url('../fonts/font_proxima/proxima_nova_bold.svg#proxima_nova_bold') format('svg'); 
+};
 
-}
-a {
-	text-decoration: none;
-}
+@font-face {
+	font-family: 'Montserrat Bold';
+	src: url('../fonts/font_montserrat/Montserrat-Bold.ttf') format('truetype');
+};
+
+@font-face {
+	font-family: 'Montserrat SemiBold';
+	src: url('../fonts/font_montserrat/Montserrat-SemiBold.ttf') format('truetype');
+};
+
+@font-face {
+	font-family: 'Montserrat Regular';
+	src: url('../fonts/font_montserrat/Montserrat-Regular.ttf') format('truetype');
+};
 
 .container {
 	width: 1530px;
 	margin: 0 auto;
+}
+.padding {
+		padding: 0 130px;
+}
+.btns-font {
+		font-family: 'Montserrat SemiBold',sans-serif;
+}
+.header {
+	display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26px 0;
+  font-size: 1rem;
 
-	.header {
+  .logo {
 		display: flex;
-    	justify-content: space-between;
-    	align-items: center;
+		align-items: center;
+
+		.logo__img {
+			height: 53px;
+		}
+
+		.logo__text {
+			padding-left: 14px;
+			padding-bottom: 10px;
+			font-family: 'Proxima Nova Bold', sans-serif;
+
+			p:nth-child(1){
+				color: #001237;
+				text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+			}
+
+			p:nth-child(2){
+				color: transparent;    
+				-webkit-background-clip: text;
+				background-clip: text;
+				background-image: linear-gradient(180deg, #09A9E5 -15.6%, #2155CF 100.41%);
+			}
+		}
+	}
+
+	.header__button {
+		width: 250px;
+		height: 54px;
+		border-radius: 50px;
+		color: #FFFFFF;
+		background-color: #2155CF;
+		cursor: pointer;
+
+		&:hover {
+			background-color: #1442AE;
+		}
 	}
 
 	.menu__list	{
 		display: flex;
 
 		.menu__item {
-			padding: 0 40px;
+			padding: 0 20px;
 		}
 
+		.menu__link {
+			font-family: 'Montserrat Regular', sans-serif;
+			color: #001237;
+			line-height: 1.25rem;
+		}
 	}
 }
+
+.offer-card-section {
+	width: 100%;
+	background: #F1F7FE;
+	padding-top: 62px;
+	padding-bottom: 58px;
+
+	.offer-card{
+		background-color: #FFFFFF;
+		color: #001237;
+		padding: 30px 0 28px 0;
+		border-radius: 10px;
+
+		.offer-card__title {
+			font-family: 'Proxima Nova Bold',sans-serif;
+			font-size: 2.9rem;
+			line-height: 3.3rem;
+			padding-bottom: 32px;
+			padding-left: 41px;
+			border-bottom: 1px solid #CFDAE2;
+		}
+
+		.offer-card__info{
+			display: flex;
+			justify-content: space-between;
+			padding-left: 41px;
+			padding-right: 40px;
+			padding-top: 33px;
+
+			.offer-card__info-item{
+
+				.info-item__title{
+					font-family: 'Montserrat Regular', sans-serif;
+					color: #263238;
+					line-height: 1.25rem;
+				}
+
+				.info-item__desc{
+					font-family: 'Montserrat Bold',sans-serif;
+					font-size: 1.1rem;
+					line-height: 1.9rem;
+					padding-top: 8px;
+				}
+			}
+			.offer-card__info-button {
+				width: 245px;
+				height: 60px;
+				background: transparent;
+				border: 2px solid #2155CF;
+				border-radius: 50px;
+				font-size: 1rem;
+				line-height: 1rem;
+				text-transform: uppercase;
+				color: #2155CF;
+				cursor: pointer;
+
+				&:hover {
+					background-color: #2155CF;
+					color: #FFFFFF;
+
+					.info-button__icon{
+						fill: #FFFFFF;
+					}
+				}
+
+				.info-button__icon {
+					vertical-align: top;
+				}
+			}
+		}
+	}
+}
+
+.offer-filter {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	.offer-filter__description {
+		padding: 40px 0;
+
+		.offer-filter__title {
+			font-family: 'Montserrat Regular', sans-serif;
+			line-height: 1.3rem;
+		}
+
+	.offer-filter__results-counter {
+			font-family: 'Proxima Nova Bold',sans-serif;
+			padding-top: 16px;
+			font-size: 1.9rem;
+    	line-height: 1.3rem;
+		}
+	}
+
+	.offer-filter__buttons {
+		padding-top: 17px;
+		.offer-filter__button {
+			display: none;
+
+			&:checked + .offer-filter__label {
+				background: rgba(33, 85, 207, 0.09);
+				font-family: 'Montserrat SemiBold',sans-serif;
+				color: #001237;
+			}
+		}
+
+		.offer-filter__label {
+			display: flex;
+			justify-conten: center;
+			height: 46px;
+			align-items: center;
+			font-family: 'Montserrat Regular',sans-serif;
+			color: #7E8595;
+			border: 1px solid #D7E1E9;
+			float: left;
+			cursor: pointer;
+			user-select: none;
+
+			&:hover {
+				color: #001237;
+			}
+
+			&:nth-child(2){
+				border-top-left-radius: 6px;
+				border-bottom-left-radius: 6px; 
+				border-right: none;
+				padding: 0 57px;
+
+			}
+
+			&:nth-child(4){
+				border-radius: 0;
+				padding: 0 37px;
+
+			}
+
+			&:nth-child(6){
+				border-top-right-radius: 6px;
+				border-bottom-right-radius: 6px; 
+				border-left: none;
+				padding: 0 7px;
+
+			}
+		}
+
+		
+	}
+}
+
+

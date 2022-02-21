@@ -4,33 +4,100 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
-	<link rel="stylesheet" href="/css/app.min.css">
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="/css/app.min.css" />
 	<script type="text/javascript" defer src="./js/main.js"></script>
 </head>
 <body>
-		<div class="container">
+		
 
-	<header class="header">
-			<div class="logo">
-			<a href="">
-				<img src='images/dest/logo/Subtract.svg' alt="Logo" title="Logo strahovanie">
-			</a>
-			<span class="logo__text">
-				
-			</span>
+	<div class="container">
+		<header class="header">
+
+				<div class="logo">
+				<a href="">
+				<img class="logo__img" src='images/dest/logo/Subtract.svg' alt="Logo" title="Logo strahovanie">
+				</a>
+				<span class="logo__text">
+					<p>Онлайн</p>
+					<p>Страхование</p>
+				</span>
+			</div>
+
+			<nav class="menu">
+				<ul class="menu__list">
+					<li class="menu__item"><a class="menu__link" href="">ОСАГО</a></li>
+					<li class="menu__item"><a class="menu__link" href="">КАСКО</a></li>
+					<li class="menu__item"><a class="menu__link" href="">Зеленая карта</a></li>
+					<li class="menu__item"><a class="menu__link" href="">Туристическое страхование</a></li>
+					<li class="menu__item"><a class="menu__link" href="">О нас</a></li>
+					<li class="menu__item"><a class="menu__link" href="">Контакты</a></li>
+				</ul>
+			</nav>
+			<button  class="header__button btns-font">ЗАКАЗАТЬ ЗВОНОК</button>
+		</header>
+	</div>
+	
+
+		<div class="offer-card-section">
+			<div class="container padding">
+
+				<div class="offer-card">
+					<h1 class='offer-card__title'>Зеленая карта</h1>
+
+					<div class="offer-card__info">
+
+						<div class="offer-card__info-item">
+							<span class="info-item__title">Тип транспортного средства</span>
+							<h3 class="info-item__desc">Легковой автомобiль</h3>
+						</div>
+
+						<div class="offer-card__info-item">
+							<span class="info-item__title">Срок действия</span>
+							<h3 class="info-item__desc">15 дней</h3>
+						</div>
+
+						<div class="offer-card__info-item">
+							<span class="info-item__title">Направление</span>
+							<h3 class="info-item__desc">Европа (вся система)</h3>
+						</div>
+
+						<button class="offer-card__info-button btns-font" >
+							<svg  class="info-button__icon" width="14" height="14" viewBox="0 0 14 14" fill="#2155CF" xmlns="http://www.w3.org/2000/svg">
+								<path d="M8.70554 2.35921L11.5535 5.2071L4.3446 12.416L1.4983 9.56808L8.70554 2.35921ZM13.7145 1.67237L12.4444 0.402306C11.9536 -0.088529 11.1566 -0.088529 10.6641 0.402306L9.44747 1.6189L12.2954 4.46681L13.7145 3.04773C14.0952 2.66701 14.0952 2.05306 13.7145 1.67237ZM0.00792508 13.571C-0.0439033 13.8043 0.166693 14.0133 0.399973 13.9566L3.5735 13.1871L0.727197 10.3392L0.00792508 13.571Z" />
+								</svg>
+							Изменить
+					</button>				
+					</div>
+				</div>
 		</div>
-		<nav class="menu">
-			<ul class="menu__list">
-				<li class="menu__item"><a class="menu__link" href="">ОСАГО</a></li>
-				<li class="menu__item"><a class="menu__link" href="">КАСКО</a></li>
-				<li class="menu__item"><a class="menu__link" href="">Зеленая карта</a></li>
-				<li class="menu__item"><a class="menu__link" href="">Туристическое страхование</a></li>
-				<li class="menu__item"><a class="menu__link" href="">О нас</a></li>
-				<li class="menu__item"><a class="menu__link" href="">Контакты</a></li>
-			</ul>
-		</nav>
-		<input type="submit" class="header__button" value="ЗАКАЗАТЬ ЗВОНОК">
-	</header>
+	</div>
+	<div class="offer-filter-section">
+
+				<div class="container padding"> 
+
+					<div class="offer-filter">
+							<div class="offer-filter__description">
+								<span class="offer-filter__title">Гарантируем лучшую цену, не дороже чем напрямую в страховой компании</span>
+								<h2 class="offer-filter__results-counter">8 предложений</h2>
+							</div>
+
+						<div class="offer-filter__buttons">
+							<input type="radio" class="offer-filter__button" id="price" name="filte-btn" checked>
+							<label class="offer-filter__label" for="price">По цене</label>
+
+							<input type="radio" class="offer-filter__button" id="rating" name="filte-btn">
+							<label class="offer-filter__label" for="rating">По рейтингу</label>
+
+							<input type="radio" class="offer-filter__button" id="email" name="filte-btn">
+							<label class="offer-filter__label" for="email">Электронный адрес</label>
+						</div>
+
+					</div>
+
+				</div>
+
+		</div>
 
 
 </body>
