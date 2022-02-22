@@ -52,9 +52,11 @@
 		.logo__text {
 			padding-left: 14px;
 			padding-bottom: 10px;
+			letter-spacing: 0.1rem;
 			font-family: 'Proxima Nova Bold', sans-serif;
 
 			p:nth-child(1){
+
 				color: #001237;
 				text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 			}
@@ -81,17 +83,30 @@
 		}
 	}
 
-	.menu__list	{
-		display: flex;
+	.menu {
+			padding-left: 77px;
 
-		.menu__item {
-			padding: 0 20px;
-		}
+			.menu__list	{
+				display: flex;
 
-		.menu__link {
-			font-family: 'Montserrat Regular', sans-serif;
-			color: #001237;
-			line-height: 1.25rem;
+			.menu__item {
+				padding: 0 19px;
+
+
+				&:nth-child(1) {
+					padding-left: 0;
+				}
+				&:nth-child(6) {
+					padding-right: 0;
+				}
+			}
+
+			.menu__link {
+				font-family: 'Montserrat Regular', sans-serif;
+				color: #001237;
+				line-height: 1.25rem;
+				font-size: 0.9rem;
+			}
 		}
 	}
 }
@@ -112,7 +127,7 @@
 			font-family: 'Proxima Nova Bold',sans-serif;
 			font-size: 2.9rem;
 			line-height: 3.3rem;
-			padding-bottom: 32px;
+			padding-bottom: 26px;
 			padding-left: 41px;
 			border-bottom: 1px solid #CFDAE2;
 		}
@@ -122,21 +137,25 @@
 			justify-content: space-between;
 			padding-left: 41px;
 			padding-right: 40px;
-			padding-top: 33px;
+			padding-top: 30px;
 
 			.offer-card__info-item{
+				padding-top: 4px;
+				&:nth-child(3) {
+					padding-right: 89px;
+				}
 
 				.info-item__title{
 					font-family: 'Montserrat Regular', sans-serif;
 					color: #263238;
+					font-size: 0.9rem;
 					line-height: 1.25rem;
 				}
 
 				.info-item__desc{
 					font-family: 'Montserrat Bold',sans-serif;
-					font-size: 1.1rem;
+					font-size: 1rem;
 					line-height: 1.9rem;
-					padding-top: 8px;
 				}
 			}
 			.offer-card__info-button {
@@ -174,11 +193,13 @@
 	justify-content: space-between;
 
 	.offer-filter__description {
-		padding: 40px 0;
+		padding-top: 27px;
+		padding-bottom: 40px;
 
 		.offer-filter__title {
 			font-family: 'Montserrat Regular', sans-serif;
-			line-height: 1.3rem;
+			line-height: 2.3rem;
+			font-size: 0.87rem;
 		}
 
 	.offer-filter__results-counter {
@@ -186,11 +207,11 @@
 			padding-top: 16px;
 			font-size: 1.9rem;
     	line-height: 1.3rem;
+    	padding-top: 17px;
 		}
 	}
 
-	.offer-filter__buttons {
-		padding-top: 17px;
+
 		.offer-filter__button {
 			display: none;
 
@@ -240,8 +261,108 @@
 			}
 		}
 
-		
-	}
 }
 
+.offers-list-section {
+	padding-top: 80px;
+	padding-bottom: 103px;
+	background-color: #F1F7FE;
 
+
+	.offers-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 60px 38px 40px 54px;
+		font-family: 'Montserrat Regular',sans-serif;
+		box-shadow: 0px 4px 46px rgba(123, 139, 181, 0.22);
+		background-color: #FFFFFF;
+		border-radius: 10px;
+		margin-bottom: 30px;
+		height: 120px;
+
+		.offers-item__name {
+			font-size: 0.9rem;
+		}
+
+
+		.item-rating, .item-franchise, .item-price {
+			display: flex;
+			flex-direction: column;
+			text-align: center;
+		}
+
+		.item-rating {
+			    padding-left: 58px;
+			.item-rating__title {
+				display: none;
+			}
+
+			.item-rating__status {
+				font-size: 1rem;
+				color: #F7941E;
+			}
+		}
+
+		.item-franchise {
+			.item-franchise__title {
+				display: none;
+			}
+		}
+
+		.item-price {
+			color: #263238;
+			font-family: 'Montserrat Bold',sans-serif;
+			font-size: 1.1rem;
+			line-height:1.3rem;
+			padding-top: 19px;
+
+			.item-price__title {
+				display: none;
+			}
+			.item-price__current {
+			}
+
+			.item-price__old {
+				position: relative;
+				opacity: 0.5;
+
+				&:before {
+    			position: absolute;
+    			content: "";
+    			height: 2px;
+    			width: 100%;
+    			background-color: #AEAEAE;
+    			bottom: 12px;
+					transform: rotate(-8.24deg);
+				}
+			}
+		}
+		.item__button {
+			width: 170px;
+			height: 44px;
+			background-color: #FF9504;
+			border-radius: 50px;
+			color: #FFFFFF;
+			font-family: 'Montserrat SemiBold',sans-serif;
+			text-transform: uppercase;
+
+			&:hover {
+				background-color: #E28300;
+			}
+		}
+
+	}
+}
+.dogovor-section {
+	.dogovor {
+		background: linear-gradient(0deg, #072D85, #072D85);
+		border-radius: 12px;
+
+		.dogovor-img-container {
+			background-color: inherit;
+			position: relative;
+			
+		}
+	}
+}
